@@ -1,0 +1,951 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="cryptography---overview">Cryptography - Overview</h1>
+<h2 id="slide-1--overview-of-modern-cryptography">Slide 1 : Overview of Modern Cryptography</h2>
+<p><strong>Evolution of Cryptography</strong>:</p>
+<ul>
+<li>Originated thousands of years ago.</li>
+<li>Early cryptographic algorithms included MD5 and DES (now retired).</li>
+<li>Modern cryptographic algorithms: SHA-3, Argon2, ChaCha20.</li>
+</ul>
+<h2 id="slide-2--what-is-cryptography">Slide 2 : What is Cryptography?</h2>
+<ul>
+<li><strong>Definition of Cryptography</strong>: Science of securing and protecting information.</li>
+<li><strong>Ubiquity in the Digital World</strong>: Used in websites, emails, and WiFi connections.</li>
+<li><strong>Importance for Developers</strong>:
+<ul>
+<li>Need basic understanding of cryptography.</li>
+<li>Knowledge of crypto algorithms and libraries.</li>
+<li>Understanding of hashing, symmetric &amp; asymmetric ciphers, encryption schemes.</li>
+<li>Familiarity with digital signatures, cryptosystems, and underlying algorithms.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-2.1--encryption-and-keys">Slide 2.1 : Encryption and Keys</h3>
+<ul>
+<li>
+<p><strong>Cryptography’s Role</strong>:</p>
+<ul>
+<li>Ensures secure storage and transmission of data.</li>
+<li>Protects data so only intended recipients can access and process it.</li>
+<li>Involves encryption and decryption using symmetric or asymmetric schemes.</li>
+<li>Uses keys to transform data from plain to encrypted form and back.</li>
+</ul>
+</li>
+<li>
+<p><strong>Symmetric Encryption</strong>:</p>
+<ul>
+<li>Same key used for both encryption and decryption.</li>
+<li>Examples: AES, Twofish, ChaCha20.</li>
+</ul>
+</li>
+<li>
+<p><strong>Asymmetric Encryption</strong>:</p>
+<ul>
+<li>Uses a public-key cryptosystem with a key-pair.</li>
+<li>Public key (encryption) and private key (decryption).</li>
+<li>Examples: RSA, ECC.</li>
+</ul>
+</li>
+<li>
+<p><strong>Encryption Schemes</strong>:</p>
+<ul>
+<li>Often combine multiple algorithms.</li>
+<li>Examples: AES-256-CTR-HMAC-SHA-256, ChaCha20-Poly1305, ECIES-secp256k1-AES-128-GCM.</li>
+</ul>
+</li>
+<li>
+<p><strong>Key Derivation</strong>:</p>
+<ul>
+<li>Keys are large secret numbers derived from passwords, passphrases, or numbers.</li>
+<li>Derivation is done using key derivation algorithms.</li>
+<li>Examples: PBKDF2, Scrypt.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-2.2--digital-signatures-and-message-authentication">Slide 2.2 : Digital Signatures and Message Authentication</h3>
+<ul>
+<li>
+<p><strong>Digital Signatures</strong>:</p>
+<ul>
+<li>Guarantees message authenticity, integrity, and non-repudiation.</li>
+<li>Uses asymmetric key pair (private and public keys).</li>
+<li>Message is <strong>signed</strong> with private key and <strong>verified</strong> with public key.</li>
+<li>Used in <strong>bank systems</strong> for signing and approving payments.</li>
+<li>In <strong>blockchain</strong>, signed transactions transfer assets between addresses.</li>
+</ul>
+</li>
+<li>
+<p><strong>Message Authentication</strong>:</p>
+<ul>
+<li>Uses <strong>message authentication algorithms</strong> (e.g., HMAC) and <strong>message authentication codes</strong> (MAC).</li>
+<li>Ensures message authenticity, integrity, and authorship.</li>
+<li>Works alongside encryption to enable secure communication.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-2.3-secure-random-numbers">Slide 2.3 Secure Random Numbers</h3>
+<ul>
+<li><strong>Random Numbers in Cryptography</strong>:
+<ul>
+<li>Cryptography relies on <strong>random numbers</strong> and <strong>entropy</strong> (unpredictable randomness).</li>
+<li>Ensures secure generation of random numbers, often using <strong>CSPRNG</strong> (Cryptographically Secure Pseudo-Random Number Generators).</li>
+<li><strong>Secure random numbers</strong> are inherently unpredictable.</li>
+<li>Developers must ensure proper random number generation, as a broken generator compromises system or app security.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-2.4-key-exchange">Slide 2.4 Key Exchange</h3>
+<ul>
+<li>
+<p><strong>Key-Exchange Algorithms</strong>:</p>
+<ul>
+<li>Includes algorithms like <strong>Diffie-Hellman</strong> and <strong>ECDH</strong>.</li>
+<li>Used to securely establish <strong>encryption keys</strong> between two parties.</li>
+<li>Ensures secure communication by enabling encrypted message transmission.</li>
+</ul>
+</li>
+<li>
+<p><strong>Key Establishment Schemes</strong>:</p>
+<ul>
+<li>Enable secure establishment of encryption keys.</li>
+<li>Commonly used when a secure connection is created, such as when opening a modern website or connecting to a WiFi network.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-2.5-cryptographic-hashes-and-password-hashing">Slide 2.5 Cryptographic Hashes and Password Hashing</h3>
+<ul>
+<li>
+<p><strong>Cryptographic Hash Functions</strong>:</p>
+<ul>
+<li>Examples: <strong>SHA-3</strong>, <strong>BLAKE2</strong>.</li>
+<li>Transform messages into a <strong>fixed-length message digest</strong> (hash).</li>
+<li>Hashes are irreversible and almost uniquely identify the original input.</li>
+<li>In <strong>blockchain</strong>, hashes are used for generating addresses, transaction IDs, and in various algorithms.</li>
+<li>In <strong>Git</strong>, hashes create unique IDs for files and commits.</li>
+</ul>
+</li>
+<li>
+<p><strong>Password Hashing and Key Derivation</strong>:</p>
+<ul>
+<li><strong>Password hashing</strong> protects user passwords and encrypted data.</li>
+<li>Key derivation functions like <strong>Scrypt</strong> and <strong>Argon2</strong> securely generate hashes or keys from passwords.</li>
+<li>Involves injecting random parameters (salt) and using multiple iterations to slow down password cracking.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-2.6-cryptographic-libraries">Slide 2.6 Cryptographic Libraries</h3>
+<ul>
+<li>
+<p><strong>Knowledge of Cryptographic Libraries</strong>:</p>
+<ul>
+<li>Developers should be familiar with modern <strong>cryptographic libraries</strong> for their specific programming language and platform.</li>
+<li>Libraries are essential, but understanding the underlying <strong>crypto concepts</strong> is crucial.</li>
+</ul>
+</li>
+<li>
+<p><strong>Risks of Blindly Using Examples</strong>:</p>
+<ul>
+<li>Copying code from the internet or following blog examples can lead to insecure designs and weak security.</li>
+</ul>
+</li>
+<li>
+<p><strong>Best Practices</strong>:</p>
+<ul>
+<li>Understand the cryptographic concepts before implementing.</li>
+<li>Carefully choose and combine appropriate algorithms.</li>
+<li>Adjust parameters to ensure strong security.</li>
+</ul>
+</li>
+</ul>
+<h1 id="slide-3-encryption-symmetric-and-asymmetric">Slide 3 Encryption: Symmetric and Asymmetric</h1>
+<ul>
+<li>
+<p><strong>Two Major Types of Encryption Schemes</strong>:</p>
+<ul>
+<li><strong>Symmetric Encryption</strong>:
+<ul>
+<li>A single <strong>secret key</strong> is used for both encryption and decryption.</li>
+</ul>
+</li>
+<li><strong>Asymmetric Encryption</strong>:
+<ul>
+<li>Uses a <strong>public-key cryptosystem</strong>.</li>
+<li>Encryption is done with the <strong>public key</strong>, and decryption is done with the <strong>corresponding private key</strong>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Goal</strong>:</p>
+<ul>
+<li>To understand these fundamental cryptographic concepts in detail.</li>
+</ul>
+</li>
+</ul>
+<h2 id="slide-3.1-symmetric-encryption---concepts-and-algorithms">Slide 3.1 Symmetric Encryption - Concepts and Algorithms</h2>
+<ul>
+<li><strong>Symmetric Encryption</strong>:
+<ul>
+<li>Uses <strong>the same symmetric key</strong> (or password) for both encryption and decryption.</li>
+<li>The same key is used to <strong>encrypt</strong> data and <strong>decrypt</strong> it back to its original form.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/nakov/Practical-Cryptography-for-Developers-Book/raw/master/.gitbook/assets/symmetric-encryption.png" alt=""></p>
+<ul>
+<li>
+<p><strong>Symmetric Encryption Scheme</strong>:</p>
+<ul>
+<li>Combines multiple cryptographic algorithms into one scheme.</li>
+<li>Example: <strong>AES-256-CTR-HMAC-SHA256</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Components of an Encryption Scheme</strong>:</p>
+<ul>
+<li><strong>Password-to-key derivation</strong> algorithm (with specific parameters).</li>
+<li><strong>Symmetric cipher</strong> algorithm (with specific parameters).</li>
+<li><strong>Cipher block mode</strong> algorithm.</li>
+<li><strong>Message authentication (MAC)</strong> algorithm.</li>
+</ul>
+</li>
+<li>
+<p><strong>Simplified Diagram</strong>:</p>
+<ul>
+<li>The diagram shown is simplified and does not fully represent the complex process of symmetric encryption.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-3.2-secret-keys">Slide 3.2 Secret Keys</h3>
+<ul>
+<li>
+<p><strong>Secret Key in Symmetric Encryption</strong>:</p>
+<ul>
+<li>The <strong>secret key</strong> used for both <strong>encryption</strong> and <strong>decryption</strong> is typically 128, 192, or 256 bits in size.</li>
+<li>Often referred to as the <strong>encryption key</strong> or <strong>shared key</strong>.</li>
+<li>Both the sending and receiving parties must know the key to securely encrypt and decrypt data.</li>
+</ul>
+</li>
+<li>
+<p><strong>Password-to-Key Derivation</strong>:</p>
+<ul>
+<li>Most applications use a <strong>password-to-key-derivation</strong> scheme to extract a <strong>secret key</strong> from a password.</li>
+<li>This is because users find it easier to remember passwords than binary data.</li>
+<li>The derived secret key is then used for encryption.</li>
+</ul>
+</li>
+<li>
+<p><strong>Message Authentication</strong>:</p>
+<ul>
+<li>Often combined with encryption to ensure <strong>integrity</strong> and <strong>authenticity</strong>.</li>
+<li>This combined approach is known as <strong>authenticated encryption</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Private Key Example</strong>:</p>
+<ul>
+<li>A <strong>private key</strong> is often represented as a <strong>256-bit secret key</strong>.</li>
+<li>This key can be encoded as a <strong>hex string</strong> (a human-readable format using hexadecimal characters).</li>
+</ul>
+</li>
+</ul>
+<pre><code>02c324648931b89e3e8a0fc42c96e8e3be2e42812986573a40d46563bceaf75110
+
+</code></pre>
+<ul>
+<li>
+<p><strong>Secret Key Encoding</strong>:</p>
+<ul>
+<li>In many systems (e.g., public blockchains, PGP, OpenSSL), secret keys are encoded in <strong>base58</strong> or <strong>base64</strong> for shorter string representations.</li>
+<li>These encodings help reduce the length of the key while maintaining its integrity.</li>
+</ul>
+</li>
+<li>
+<p><strong>Example</strong>:</p>
+<ul>
+<li>The 256-bit secret key, when encoded in <strong>base58</strong>, would appear as a more compact string compared to its hexadecimal form.</li>
+</ul>
+</li>
+</ul>
+<pre><code>pbPRqYDxnKZfs8j4KKiqYmx6nzipAjTJf1oCD1WKgy99
+
+</code></pre>
+<p>The same key looks like this in <strong>base64</strong>:</p>
+<pre><code>AsMkZIkxuJ4+ig/ELJbo474uQoEphlc6QNRlY7zq91EQ
+
+</code></pre>
+<p>In <strong>decimal</strong> system, the above key is the following integer number:</p>
+<pre><code>319849484316084980661994213716306415989897600164422912728298459349458028548368
+
+</code></pre>
+<h3 id="slide-3.3-modern-symmetric-encryption-algorithms">Slide 3.3 Modern Symmetric Encryption Algorithms</h3>
+<ul>
+<li>
+<p><strong>Widely Used Symmetric Encryption Algorithms</strong>:</p>
+<ul>
+<li><strong>AES</strong> (AES-128, AES-192, AES-256)</li>
+<li><strong>ChaCha20</strong></li>
+<li><strong>Twofish</strong></li>
+<li><strong>IDEA</strong></li>
+<li><strong>Serpent</strong></li>
+<li><strong>Camellia</strong></li>
+<li>These algorithms are primarily used for encrypting data.</li>
+</ul>
+</li>
+<li>
+<p><strong>Types of Ciphers</strong>:</p>
+<ul>
+<li><strong>Block Ciphers</strong>: Encrypt data in fixed-size blocks (e.g., 128 bits).</li>
+<li><strong>Stream Ciphers</strong>: Encrypt data byte by byte as a continuous stream.</li>
+<li><strong>Block Ciphers as Stream Ciphers</strong>: Block ciphers can be converted into stream ciphers using a technique called <strong>cipher block mode</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Further Details</strong>:</p>
+<ul>
+<li>More details and code examples for <strong>AES</strong> and <strong>ChaCha20</strong> will be provided later.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-3.4-symmetric-encryption---online-demo">Slide 3.4 Symmetric Encryption - Online Demo</h3>
+<ul>
+<li><strong>Hands-on with Symmetric Encryption</strong>:
+<ul>
+<li>To better understand symmetric encryption, try using an <strong>online symmetric encryption tool</strong>.</li>
+<li>You can <strong>encrypt</strong> and <strong>decrypt</strong> a sample message using a sample <strong>secret key</strong> (or password).</li>
+<li>This practical exercise helps grasp how encryption and decryption work with the same key.</li>
+</ul>
+</li>
+</ul>
+<p>You can play a bit with this site: <a href="https://aesencryption.net"><strong>https://aesencryption.net</strong></a>.</p>
+<p><img src="https://github.com/nakov/Practical-Cryptography-for-Developers-Book/raw/master/.gitbook/assets/aesencryption.net.png" alt=""></p>
+<ul>
+<li>
+<p><strong>Encryption Example</strong>:</p>
+<ul>
+<li>Demonstrates how to encrypt and decrypt messages using the <strong>AES cipher</strong> (specifically <strong>AES-128-CBC</strong>) and a password-to-key-derivation function.</li>
+<li>Example: Encrypting the text “<em><strong>secret msg</strong></em>” with the password “<em><strong>p@ss</strong></em>” produces the <strong>base64-encoded</strong> binary data “<em><strong>jVJwOBmH+qMqHdg22KwMyg==</strong></em>”.</li>
+<li>After decryption with the same key, the original text “<em><strong>secret msg</strong></em>” is restored.</li>
+</ul>
+</li>
+<li>
+<p><strong>Important Notes</strong>:</p>
+<ul>
+<li>The encrypted output depends on various <strong>algorithm parameters</strong> and settings.</li>
+<li>If you use a different AES encryption tool, the result will likely differ, even with the same input.</li>
+<li>The mentioned website uses <strong>outdated algorithms</strong> and <strong>weak cipher settings</strong>, so avoid following the code examples from it.</li>
+</ul>
+</li>
+</ul>
+<h2 id="slide-3.5-public-key-cryptography---concepts">Slide 3.5 Public Key Cryptography - Concepts</h2>
+<ul>
+<li>
+<p><strong>Public Key Cryptography (Asymmetric Cryptography)</strong>:</p>
+<ul>
+<li>Uses different keys for <strong>encryption</strong> and <strong>decryption</strong> (or for <strong>signing</strong> and <strong>verifying</strong> messages).</li>
+<li>Works with <strong>public + private key pairs</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Key Functions in Asymmetric Cryptography</strong>:</p>
+<ul>
+<li><strong>Encrypting</strong> and <strong>decrypting</strong> messages with a public/private key pair.</li>
+<li><strong>Signing</strong> messages with a private key.</li>
+<li><strong>Verifying</strong> signatures with the corresponding public key.</li>
+<li><strong>Securely exchanging keys</strong> between parties.</li>
+</ul>
+</li>
+<li>
+<p><strong>Popular Public-Key Cryptosystems</strong>:</p>
+<ul>
+<li><strong>RSA</strong> (Rivest–Shamir–Adleman)</li>
+<li><strong>ECC</strong> (Elliptic Curve Cryptography)</li>
+<li><strong>Diffie-Hellman</strong></li>
+<li><strong>ECDH</strong> (Elliptic Curve Diffie-Hellman)</li>
+<li><strong>ECDSA</strong> (Elliptic Curve Digital Signature Algorithm)</li>
+<li><strong>EdDSA</strong> (Edwards-curve Digital Signature Algorithm)</li>
+</ul>
+</li>
+<li>
+<p><strong>Practical Application</strong>:</p>
+<ul>
+<li>These algorithms are widely used in modern cryptography and will be demonstrated with practical code examples.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-3.6-public-key-encryption--decryption">Slide 3.6 Public Key Encryption / Decryption</h3>
+<ul>
+<li>
+<p><strong>Asymmetric Encryption Schemes</strong>:</p>
+<ul>
+<li>Use a pair of cryptographically related <strong>public</strong> and <strong>private keys</strong>.</li>
+<li><strong>Public key</strong> is used to <strong>encrypt</strong> the data.</li>
+<li><strong>Private key</strong> is used to <strong>decrypt</strong> the encrypted data back to its original form.</li>
+</ul>
+</li>
+<li>
+<p><strong>Key Functionality</strong>:</p>
+<ul>
+<li>Data <strong>encrypted with a public key</strong> can only be <strong>decrypted</strong> by the corresponding <strong>private key</strong>.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/nakov/Practical-Cryptography-for-Developers-Book/raw/master/.gitbook/assets/public-key-cryptography-encrypt-decrypt.png" alt=""></p>
+<ul>
+<li><strong>Ciphertext</strong>:
+<ul>
+<li>The result of encryption is called <strong>ciphertext</strong>.</li>
+<li>It is a <strong>binary sequence</strong> that is unreadable by humans.</li>
+<li>By design, it <strong>cannot be decrypted</strong> without the corresponding <strong>decryption key</strong>.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/nakov/Practical-Cryptography-for-Developers-Book/raw/master/.gitbook/assets/asymmetric-encryption-diagram.png" alt=""></p>
+<ul>
+<li>
+<p><strong>Limitations of Asymmetric Encryption</strong>:</p>
+<ul>
+<li><strong>Asymmetric encryption</strong> can only encrypt messages of limited length and is typically slower than symmetric ciphers.</li>
+</ul>
+</li>
+<li>
+<p><strong>Hybrid Encryption (Public-Key Encryption Scheme)</strong>:</p>
+<ul>
+<li>Combines <strong>symmetric</strong> and <strong>asymmetric encryption</strong> for efficient encryption of larger messages (e.g., PDF documents).</li>
+<li>Process:
+<ol>
+<li>A random <strong>symmetric key</strong> (<code>sk</code>) is generated.</li>
+<li>The message is encrypted symmetrically with <code>sk</code>.</li>
+<li>The symmetric key (<code>sk</code>) is then encrypted asymmetrically using the recipient’s <strong>public key</strong>.</li>
+<li>For <strong>decryption</strong>, the recipient uses their <strong>private key</strong> to decrypt <code>sk</code> and then uses <code>sk</code> to symmetrically decrypt the message.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Key Encapsulation Mechanism (KEM)</strong>:</p>
+<ul>
+<li>The process described above is called <strong>key encapsulation mechanism (KEM)</strong>.</li>
+<li>In KEM, an <strong>asymmetrically encrypted random symmetric key</strong> is used to securely encrypt data.</li>
+</ul>
+</li>
+<li>
+<p><strong>Alternative Public-Key Encryption</strong>:</p>
+<ul>
+<li>Public-key encryption can also work in the opposite way:
+<ul>
+<li><strong>Encrypt data with a private key</strong> and <strong>decrypt it with the public key</strong>.</li>
+<li>This is often used to prove ownership of a private key, while revealing only the <strong>public key</strong>, as in some <strong>digital signature schemes</strong>.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-3.7-signatures-asymmetric-signing--verification">Slide 3.7 Signatures: Asymmetric Signing / Verification</h3>
+<ul>
+<li><strong>Digital Signatures</strong>:
+<ul>
+<li>A message <strong>signed with a private key</strong> generates a <strong>digital signature</strong>.</li>
+<li>This signature can later be <strong>verified</strong> using the corresponding <strong>public key</strong>.</li>
+<li>Ensures <strong>authenticity, integrity, and non-repudiation</strong> of the message.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/nakov/Practical-Cryptography-for-Developers-Book/raw/master/.gitbook/assets/public-key-cryptography-sign-verify.png" alt=""></p>
+<h3 id="slide-4---digital-signatures-overview">Slide 4 :  <strong>Digital Signatures Overview</strong></h3>
+<ul>
+<li>A <strong>message is signed</strong> using a <strong>private key</strong>, generating a <strong>digital signature</strong>.</li>
+<li>The <strong>signature is verified</strong> using the corresponding <strong>public key</strong>.</li>
+<li>A <strong>signed message cannot be altered</strong> after signing.</li>
+<li>Provides <strong>authentication, integrity, and non-repudiation</strong> (proof of authorship).</li>
+</ul>
+<h3 id="slide-4.1--applications-of-digital-signatures">Slide 4.1 : <strong>Applications of Digital Signatures</strong></h3>
+<ul>
+<li><strong>Finance Industry</strong>: Used to <strong>authorize payments</strong> securely.</li>
+<li><strong>Operating Systems</strong>: OS components and <strong>device drivers</strong> are digitally signed to prevent malicious code, trojans, or viruses.</li>
+<li><strong>Blockchain Systems</strong>:
+<ul>
+<li>Transactions are signed by the owner of a <strong>blockchain address</strong> (linked to a public-private key pair).</li>
+<li><strong>Proof of authorship</strong>: Ensures the transaction was created by the rightful owner and not modified after signing.</li>
+<li>Essential for <strong>digital payments</strong> and <strong>secure document signing</strong> (e.g., contracts).</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-5--key-pairs">Slide 5 : Key Pairs</h3>
+<h3 id="slide-5.1--public-key-cryptography-overview">Slide 5.1 : <strong>Public Key Cryptography Overview</strong></h3>
+<ul>
+<li>Uses a <strong>pair of keys</strong>: <strong>public key</strong> + <strong>private key</strong>.</li>
+<li>These keys are <strong>mathematically connected</strong> and work together as a <strong>pair</strong>.</li>
+</ul>
+<h3 id="slide-5.2--key-generation-in-different-cryptosystems">Slide 5.2 : <strong>Key Generation in Different Cryptosystems</strong></h3>
+<ul>
+<li><strong>Elliptic-Curve Cryptography (ECC)</strong>: The <strong>public key</strong> can be <strong>calculated</strong> from the <strong>private key</strong>.</li>
+<li><strong>RSA Cryptosystem</strong>: The public and private keys are generated <strong>together</strong> but <strong>cannot be directly derived</strong> from each other.</li>
+</ul>
+<h3 id="slide-5.3--secure-key-management">Slide 5.3 : <strong>Secure Key Management</strong></h3>
+<ul>
+<li>A <strong>public/private key pair</strong> is <strong>randomly generated</strong> in a secure environment (e.g., hardware wallet).</li>
+<li>The <strong>public key</strong> is <strong>shared</strong> openly.</li>
+<li>The <strong>private key</strong> is <strong>securely stored</strong> (e.g., in a crypto-wallet) and protected by <strong>passwords</strong> or <strong>multi-factor authentication (MFA)</strong>.</li>
+</ul>
+<h3 id="example"><strong>Example</strong>:</h3>
+<ul>
+<li><strong>256-bit Private Key</strong> and <strong>Corresponding Public Key</strong> based on <strong>secp256k1</strong> curve.</li>
+<li>This is commonly used in <strong>cryptocurrencies and blockchain applications</strong>.</li>
+</ul>
+<pre><code>privKey: 648fc1fa828c7f185d825c04a5b21af9e473b867eeee1acea4dbab938433e158
+pubKey: 02c324648931b89e3e8a0fc42c96e8e3be2e42812986573a40d46563bceaf75110
+
+</code></pre>
+<h3 id="slide-6---private-keys">Slide 6 :  Private Keys</h3>
+<h3 id="private-key-usage-and-security"><strong>Private Key Usage and Security</strong></h3>
+<ul>
+<li>The <strong>private key</strong> is used for <strong>message encryption</strong> and <strong>digital signing</strong>.</li>
+<li><strong>Must always be kept secret</strong>, similar to passwords.</li>
+</ul>
+<h3 id="private-key-storage"><strong>Private Key Storage</strong></h3>
+<ul>
+<li><strong>Server Infrastructure</strong>:
+<ul>
+<li>Stored in an <strong>encrypted and protected keystore</strong>.</li>
+</ul>
+</li>
+<li><strong>Blockchain Systems</strong>:
+<ul>
+<li>Stored in <strong>crypto wallets</strong> (software or hardware) to securely manage private keys.</li>
+<li>Crypto wallets ensure <strong>secure key management</strong> and prevent unauthorized access.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example</strong> of 256-bit private key:</p>
+<pre><code>648fc1fa828c7f185d825c04a5b21af9e473b867eeee1acea4dbab938433e158
+
+</code></pre>
+<h3 id="slide-7--public-keys">Slide 7 : Public Keys</h3>
+<h3 id="public-key-usage-and-security"><strong>Public Key Usage and Security</strong></h3>
+<ul>
+<li><strong>Used for:</strong>
+<ul>
+<li><strong>Decrypting messages</strong> encrypted with the corresponding <strong>private key</strong>.</li>
+<li><strong>Verifying digital signatures</strong> to ensure message authenticity.</li>
+</ul>
+</li>
+<li><strong>Public keys are not secret</strong> and can be freely shared.</li>
+<li><strong>Mathematically infeasible</strong> to derive a private key from its public key.</li>
+</ul>
+<h3 id="public-key-distribution-and-storage"><strong>Public Key Distribution and Storage</strong></h3>
+<ul>
+<li><strong>Digital Certificates</strong>:
+<ul>
+<li>Bind a <strong>public key</strong> to an <strong>identity</strong> (e.g., a person, organization, or domain name).</li>
+<li>Used in <strong>TLS/SSL</strong> for secure web communications.</li>
+</ul>
+</li>
+<li><strong>Blockchain Systems</strong>:
+<ul>
+<li>Public keys are published in <strong>blockchain transactions</strong> to verify signers.</li>
+</ul>
+</li>
+<li><strong>PGP &amp; SSH</strong>:
+<ul>
+<li>Public keys are <strong>downloaded once</strong> after manual verification and stored for future use.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Example</strong> of 256-bit public key:</p>
+<pre><code>02c324648931b89e3e8a0fc42c96e8e3be2e42812986573a40d46563bceaf75110
+
+</code></pre>
+<h3 id="public-key-and-blockchain-address-relationship"><strong>Public Key and Blockchain Address Relationship</strong></h3>
+<ul>
+<li>In most <strong>blockchain systems</strong>, the <strong>blockchain address</strong> is <strong>derived</strong> from the <strong>public key</strong> through <strong>hashing and transformations</strong>.</li>
+<li>If you know someone’s <strong>public key</strong>, you can typically determine their <strong>blockchain address</strong>.</li>
+</ul>
+<h3 id="public-key-ownership-and-identity"><strong>Public Key Ownership and Identity</strong></h3>
+<ul>
+<li>A <strong>public key</strong> can be linked to:
+<ul>
+<li>A <strong>person</strong> or <strong>organization</strong> (if additional proof exists).</li>
+<li>An <strong>anonymous</strong> identity (if no verification is provided).</li>
+</ul>
+</li>
+<li>Ownership of a <strong>private key</strong> cannot be determined from a public key unless verified through a <strong>digital certificate</strong> or other proof.</li>
+</ul>
+<h2 id="slide-8--popular-public-key-cryptosystems">Slide 8 : Popular Public Key Cryptosystems</h2>
+<h3 id="public-key-cryptosystems-overview"><strong>Public Key Cryptosystems Overview</strong></h3>
+<ul>
+<li>Provide a <strong>mathematical framework</strong> for:
+<ul>
+<li><strong>Generating</strong> public + private key pairs.</li>
+<li><strong>Signing &amp; verifying</strong> messages.</li>
+<li><strong>Encrypting &amp; decrypting</strong> messages.</li>
+<li><strong>Exchanging keys securely</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="well-known-public-key-cryptosystems"><strong>Well-Known Public-Key Cryptosystems</strong></h3>
+<ol>
+<li><strong>RSA (Rivest–Shamir–Adleman)</strong> – Used for encryption, signing, and key exchange.</li>
+<li><strong>ECC (Elliptic Curve Cryptography)</strong> – Efficient and widely used for modern cryptographic applications.</li>
+<li><strong>ElGamal</strong> – Used for encryption and digital signatures.</li>
+</ol>
+<h3 id="common-algorithms-based-on-these-cryptosystems"><strong>Common Algorithms Based on These Cryptosystems</strong></h3>
+<ul>
+<li><strong>RSA Sign</strong> – Signing messages using RSA.</li>
+<li><strong>RSA Encrypt/Decrypt</strong> – Encrypting &amp; decrypting messages.</li>
+<li><strong>ECDH (Elliptic Curve Diffie-Hellman)</strong> – Secure key exchange.</li>
+<li><strong>ECDSA &amp; EdDSA</strong> – Digital signature algorithms.</li>
+</ul>
+<h3 id="the-rsa-cryptosystem">The RSA Cryptosystem</h3>
+<h3 id="rsa-public-key-cryptosystem"><strong>RSA Public-Key Cryptosystem</strong></h3>
+<ul>
+<li>Based on <strong>modular exponentiation</strong> (raising numbers to a power by modulus).</li>
+<li>Security relies on the <strong>integer factorization problem</strong> (difficulty of factoring large numbers).</li>
+<li>Commonly used for <strong>encryption, digital signatures, and key exchange</strong>.</li>
+<li>We will discuss its details and examples later.</li>
+</ul>
+<h3 id="the-ecc-cryptosystem">The ECC Cryptosystem</h3>
+<p>The <a href="https://en.wikipedia.org/wiki/Elliptic-curve_cryptography"><strong>elliptic-curve cryptography (ECC) public-key cryptosystem</strong></a> is based on the math of the on the algebraic structure of the <strong>elliptic curves</strong> over finite fields and the difficulty of the <a href="https://en.wikipedia.org/wiki/Elliptic-curve_cryptography#Rationale"><strong>elliptic curve discrete logarithm problem (ECDLP)</strong></a>. The <strong>ECC</strong> usually comes together with the <a href="https://en.wikipedia.org/wiki/Elliptic_Curve_Digital_Signature_Algorithm"><strong>ECDSA</strong> algorithm</a> (elliptic-curve digital signature algorithm). We shall discuss ECC and ECDSA in details, along with examples.</p>
+<h3 id="ecc-is-recommended-in-the-general-case">ECC is Recommended in the General Case</h3>
+<p><strong>ECC uses smaller keys</strong>, ciphertexts and signatures than RSA and is recommended for most applications. It is mathematically proven that a <strong>3072-bit RSA key</strong> has similar cryptographic strength to a <strong>256-bit ECC key</strong>. Key generation is in ECC is significantly faster than with RSA.</p>
+<p>Due to the above reasons most blockchain networks (like Bitcoin and Ethereum) use elliptic-curve-based cryptography (ECC) to secure the transactions.</p>
+<p>Note that both <strong>RSA</strong> and <strong>ECC</strong> cryptosystems are <strong>not quantum-safe</strong>, which means that if someone has enough powerful quantum computer, he will be able to derive the private key from given public key in just few seconds.</p>
+<h2 id="slide-9--asymmetric-encryption-in-practice">Slide 9 : Asymmetric Encryption in Practice</h2>
+<p><strong>Asymmetric encryption</strong> works for <strong>small messages</strong> only (limited by the public / private key length). To encrypt larger messages <a href="https://en.wikipedia.org/wiki/Key_encapsulation"><strong>key encapsulation mechanisms</strong></a> or other techniques can be used, which encrypt asymmetrically a random secret key, then use it to symmetrically encrypt the larger messages. In practice, modern <strong>asymmetric encryption schemes</strong> involve using a symmetric encryption algorithm together with a public-key cryptosystem, key encapsulation and message authentication.</p>
+<p>Popular <strong>asymmetric encryption schemes</strong> are: <a href="https://en.wikipedia.org/wiki/Optimal_asymmetric_encryption_padding"><strong>RSA-OAEP</strong></a> (based on RSA and OAEP padding), <a href="https://tools.ietf.org/html/rfc3447#section-7.2"><strong>RSAES-PKCS1-v1_5</strong></a> (based on RSA and PKCS#1 v1.5 padding), <a href="https://en.wikipedia.org/wiki/Integrated_Encryption_Scheme"><strong>DLIES</strong></a> (based on discrete logarithms and symmetric encryption) and <a href="https://en.wikipedia.org/wiki/Integrated_Encryption_Scheme"><strong>ECIES</strong></a> (based on elliptic curve cryptography and symmetric encryption).</p>
+<h3 id="asymmetric-encryption---online-demo">Asymmetric Encryption - Online Demo</h3>
+<p>In order to better understand the idea behind the <strong>asymmetric encryption</strong>, you can play with some online public key encryption tool to encrypt / decrypt a sample message by sample RSA private / public key. You can play a bit with this site: <a href="http://travistidwell.com/jsencrypt/demo/">http://travistidwell.com/jsencrypt/demo/</a>.</p>
+<p><img src="https://github.com/nakov/Practical-Cryptography-for-Developers-Book/raw/master/.gitbook/assets/asymmetric-encryption-online-demo-jsencrypt.png" alt=""></p>
+<p>In the above online demo you can <strong>generate RSA public / private key pairs</strong> and <strong>encrypt</strong> / <strong>decrypt</strong> text messages. Note that <strong>the message size is limited</strong> by the key length, so you can’t encrypt long text. You will get an error if you try. Internally, the above Web site uses the <strong>RSAES-PKCS1-v1_5</strong> public key encryption scheme as specified in <a href="https://tools.ietf.org/html/rfc3447">RFC3447</a>.</p>
+<h2 id="slide-10--asymmetric-cryptography-algorithms-explained">Slide 10 : <strong>Asymmetric Cryptography Algorithms Explained</strong></h2>
+<p>Asymmetric cryptography relies on different mathematical techniques to generate secure key pairs. Below are the most commonly used algorithms:</p>
+<hr>
+<h2 id="slide-10.1.-rsa-rivest-shamir-adleman"><strong>Slide 10.1. RSA (Rivest-Shamir-Adleman)</strong></h2>
+<h3 id="overview"><strong>Overview</strong></h3>
+<p>RSA is one of the most widely used asymmetric encryption algorithms, named after its creators: <strong>Ron Rivest, Adi Shamir, and Leonard Adleman</strong>. It is based on the mathematical challenge of <strong>prime factorization</strong>.</p>
+<h3 id="how-it-works"><strong>How It Works</strong></h3>
+<p><strong>Key Generation:</strong></p>
+<ul>
+<li>Choose two large prime numbers, pp and qq.</li>
+<li>Compute their product: n=p×qn = p \times q (this forms the modulus).</li>
+<li>Compute ϕ(n)=(p−1)×(q−1)\phi(n) = (p-1) \times (q-1).</li>
+<li>Select a public exponent ee such that 1&lt;e&lt;ϕ(n)1 &lt; e &lt; \phi(n) and ee is co-prime to ϕ(n)\phi(n).</li>
+<li>Compute the private exponent dd, where d≡e−1mod  ϕ(n)d \equiv e^{-1} \mod \phi(n).</li>
+</ul>
+<p><strong>Encryption:</strong></p>
+<ul>
+<li>Ciphertext = C=Memod  nC = M^e \mod n (where MM is the plaintext message).</li>
+</ul>
+<p><strong>Decryption:</strong></p>
+<ul>
+<li>Plaintext = M=Cdmod  nM = C^d \mod n.</li>
+</ul>
+<h3 id="pros"><strong>Pros:</strong></h3>
+<p>✔ Highly secure for sufficiently large keys (2048-bit+ recommended).<br>
+✔ Used in SSL/TLS, digital signatures, and key exchange.</p>
+<h3 id="cons"><strong>Cons:</strong></h3>
+<p>✖ Computationally expensive and slower than symmetric algorithms.<br>
+✖ Large key sizes required for strong security.</p>
+<hr>
+<h2 id="slide-10.2--ecc-elliptic-curve-cryptography"><strong>Slide 10.2 : ECC (Elliptic Curve Cryptography)</strong></h2>
+<h3 id="overview-1"><strong>Overview</strong></h3>
+<p>ECC is an alternative to RSA that provides <strong>strong security with smaller key sizes</strong>. It is based on the difficulty of solving the <strong>Elliptic Curve Discrete Logarithm Problem (ECDLP)</strong>.</p>
+<h3 id="how-it-works-1"><strong>How It Works</strong></h3>
+<p>Uses mathematical operations on points over an elliptic curve defined by an equation like:</p>
+<p>y2=x3+ax+by^2 = x^3 + ax + b</p>
+<p>Generates public-private key pairs using <strong>point multiplication</strong> on the curve.</p>
+<p>The security comes from the difficulty of solving the inverse operation (discrete logarithm problem).</p>
+<h3 id="pros-1"><strong>Pros:</strong></h3>
+<p>✔ <strong>More efficient than RSA</strong> – provides equivalent security with smaller key sizes (256-bit ECC ≈ 3072-bit RSA).<br>
+✔ Faster encryption and decryption processes.<br>
+✔ Ideal for mobile devices due to lower computational requirements.</p>
+<h3 id="cons-1"><strong>Cons:</strong></h3>
+<p>✖ More complex to implement than RSA.<br>
+✖ Some concerns about its security against quantum attacks.</p>
+<p>** Used In:** Bitcoin, TLS, secure messaging apps (Signal, WhatsApp).</p>
+<hr>
+<h2 id="slide-10.3-diffie-hellman-dh-key-exchange"><strong>Slide 10.3: Diffie-Hellman (DH) Key Exchange</strong></h2>
+<h3 id="overview-2"><strong>Overview</strong></h3>
+<p>Diffie-Hellman is <strong>not an encryption algorithm</strong>, but a key exchange protocol that enables two parties to securely share a <strong>symmetric encryption key</strong> over an insecure channel.</p>
+<h3 id="how-it-works-2"><strong>How It Works</strong></h3>
+<p>Two parties (Alice &amp; Bob) agree on a public prime number pp and a base gg.</p>
+<p>Each party selects a <strong>private secret number</strong>:</p>
+<ul>
+<li>Alice: aa, Bob: bb.<br>
+They compute their public keys:</li>
+<li>Alice: A=gamod  pA = g^a \mod p</li>
+<li>Bob: B=gbmod  pB = g^b \mod p<br>
+They exchange public keys and compute the shared secret:</li>
+<li>Alice: S=Bamod  pS = B^a \mod p</li>
+<li>Bob: S=Abmod  pS = A^b \mod p</li>
+<li>Since S=gabmod  pS = g^{ab} \mod p, both parties derive the same key!</li>
+</ul>
+<h3 id="pros-2"><strong>Pros:</strong></h3>
+<p>✔ Provides a secure way to exchange encryption keys over an insecure network.<br>
+✔ Used in TLS (HTTPS), VPNs, and SSH.</p>
+<h3 id="cons-2"><strong>Cons:</strong></h3>
+<p>✖ Vulnerable to <strong>man-in-the-middle (MITM) attacks</strong> if not combined with authentication.<br>
+✖ Does not provide encryption or authentication on its own.</p>
+<hr>
+<h2 id="slide-10.4-dsa-digital-signature-algorithm"><strong>Slide 10.4 DSA (Digital Signature Algorithm)</strong></h2>
+<h3 id="📌-overview">📌 <strong>Overview</strong></h3>
+<p>DSA is specifically designed for <strong>digital signatures</strong>, providing <strong>authentication and integrity verification</strong>. Unlike RSA, it cannot be used for encryption.</p>
+<h3 id="how-it-works-3"><strong>How It Works</strong></h3>
+<p><strong>Key Generation:</strong></p>
+<ul>
+<li>Choose a large prime pp and a smaller prime qq.</li>
+<li>Select a random private key xx and compute the public key: y=gxmod  py = g^x \mod p.</li>
+</ul>
+<p><strong>Signing Process:</strong></p>
+<ul>
+<li>Generate a random integer kk.</li>
+<li>Compute the signature components rr and ss: r=(gkmod  p)mod  qr = (g^k \mod p) \mod q s=(k−1(H(m)+xr))mod  qs = (k^{-1} (H(m) + xr)) \mod q</li>
+<li>The signature is <strong>(r, s)</strong>.</li>
+</ul>
+<p><strong>Verification:</strong></p>
+<ul>
+<li>The receiver checks if the signature is valid using public key yy and verifies integrity.</li>
+</ul>
+<h3 id="✅-pros">✅ <strong>Pros:</strong></h3>
+<p>✔ Provides strong <strong>authentication and data integrity</strong>.<br>
+✔ Faster signature generation than RSA.</p>
+<h3 id="❌-cons">❌ <strong>Cons:</strong></h3>
+<p>✖ Verification process is <strong>slower than RSA</strong>.<br>
+✖ Requires a secure random number generator for kk (weakness in randomness can break security).</p>
+<p><strong>Used In:</strong> Government security (FIPS 186-4), Bitcoin transactions.</p>
+<hr>
+<h2 id="comparison-of-algorithms"><strong>Comparison of Algorithms</strong></h2>
+<p>Algorithm</p>
+<p>Purpose</p>
+<p>Key Strength</p>
+<p>Speed</p>
+<p>Use Cases</p>
+<p><strong>RSA</strong></p>
+<p>Encryption, Signing</p>
+<p>Strong (Large Keys Needed)</p>
+<p>Slower</p>
+<p>TLS, Digital Signatures</p>
+<p><strong>ECC</strong></p>
+<p>Encryption, Signing</p>
+<p>Strong (Small Keys)</p>
+<p>Faster</p>
+<p>Bitcoin, Secure Messaging</p>
+<p><strong>Diffie-Hellman</strong></p>
+<p>Key Exchange</p>
+<p>Secure Key Agreement</p>
+<p>Medium</p>
+<p>VPNs, TLS</p>
+<p><strong>DSA</strong></p>
+<p>Digital Signatures</p>
+<p>Secure &amp; Verifiable</p>
+<p>Medium</p>
+<p>Government, Secure Transactions</p>
+<hr>
+<h3 id="final-thoughts"><strong>Final Thoughts</strong></h3>
+<ul>
+<li><strong>Use RSA</strong> if compatibility and security are needed but can handle slower performance.</li>
+<li><strong>Use ECC</strong> for modern, faster encryption with smaller key sizes.</li>
+<li><strong>Use Diffie-Hellman</strong> when secure key exchange is required.</li>
+<li><strong>Use DSA</strong> when authentication via digital signatures is a priority.</li>
+</ul>
+<p>Asymmetric cryptography remains a <strong>critical part of cybersecurity</strong>, ensuring secure communication, authentication, and data integrity. 🚀</p>
+<p>RSA<br>
+<img src="https://sectigostore.com/blog/wp-content/uploads/2020/06/how-rsa-works.png" alt="ECDSA vs RSA: Everything You Need to Know"></p>
+<p>ECC<br>
+<img src="https://miro.medium.com/v2/resize:fit:1160/1*fN1sBKNvVScvbpEFwyZR0Q.png" alt="The Wonderful World of Elliptic Curve Cryptography | by Prof Bill Buchanan  OBE FRSE | Coinmonks | Medium"><br>
+DH<br>
+<img src="https://i.ytimg.com/vi/xSUMEer6J_E/maxresdefault.jpg" alt="Diffie Hellman Key Exchange Algorithm | Complete Working with Diagram &amp;  Example"></p>
+<p>DSA<br>
+<img src="https://www.includehelp.com/cryptography/Images/dsa-1.jpg" alt="Digital Signature Algorithm (DSA) in Cryptography"></p>
+<h2 id="slide-11--symmetric-cryptography-algorithms-explained">Slide 11 : <strong>Symmetric Cryptography Algorithms Explained</strong></h2>
+<h1 id="advanced-encryption-standard-aes---rijndael">Advanced Encryption Standard (AES) - Rijndael</h1>
+<h2 id="introduction">Introduction</h2>
+<p>AES (Advanced Encryption Standard), also known as Rijndael, is the most popular symmetric encryption algorithm in modern IT. It is widely used due to its security, speed, and platform support. AES is a <strong>128-bit block cipher</strong> that supports <strong>128, 192, or 256-bit secret keys</strong>. It is commonly used in block modes like AES-CTR and AES-GCM, which require a <strong>random 128-bit initial vector (IV, nonce)</strong>.</p>
+<h2 id="history-of-aes">History of AES</h2>
+<ul>
+<li>The AES competition was organized by <strong>NIST (1997-2000)</strong>.</li>
+<li>Rijndael was selected as the winner and became the official AES encryption standard.</li>
+<li>In <strong>2001</strong>, AES was officially adopted by the <strong>US government</strong>.</li>
+<li>No significant weaknesses have been found since its adoption.</li>
+<li>Rijndael (AES) is <strong>free for any use</strong>, whether public, private, commercial, or non-commercial.</li>
+</ul>
+<h2 id="aes-encryption-process">AES Encryption Process</h2>
+<p>AES operates using a series of transformations on the input data, divided into fixed-size blocks of <strong>128 bits</strong>. The encryption process involves:</p>
+<ol>
+<li><strong>Key Expansion</strong>: The encryption key is expanded into multiple subkeys for each round.</li>
+<li><strong>Initial Round</strong>:
+<ul>
+<li>AddRoundKey: XOR the input block with the first subkey.</li>
+</ul>
+</li>
+<li><strong>Main Rounds (9, 11, or 13 depending on key size)</strong>:
+<ul>
+<li><strong>SubBytes</strong>: Substitute bytes using a fixed S-box.</li>
+<li><strong>ShiftRows</strong>: Shift rows to add diffusion.</li>
+<li><strong>MixColumns</strong>: Mix data across columns for security.</li>
+<li><strong>AddRoundKey</strong>: XOR with the next subkey.</li>
+</ul>
+</li>
+<li><strong>Final Round</strong>:
+<ul>
+<li>Same as the main rounds, but without MixColumns.</li>
+</ul>
+</li>
+</ol>
+<h2 id="aes-block-cipher-modes">AES Block Cipher Modes</h2>
+<p>AES is typically used in a <strong>block cipher mode</strong> to process data securely:</p>
+<h3 id="electronic-codebook-ecb-mode"><strong>Electronic Codebook (ECB) Mode</strong></h3>
+<ul>
+<li><strong>How It Works</strong>: Each plaintext block is encrypted independently with the same key.</li>
+<li><strong>Security Issue</strong>: Identical plaintext blocks result in identical ciphertext blocks, making patterns visible.</li>
+<li><strong>Use Case</strong>: Should <strong>never</strong> be used for secure encryption, but may be useful for encrypting fixed values like database keys.</li>
+</ul>
+<h3 id="cipher-block-chaining-cbc-mode"><strong>Cipher Block Chaining (CBC) Mode</strong></h3>
+<ul>
+<li><strong>How It Works</strong>: Each plaintext block is XORed with the previous ciphertext block before encryption.</li>
+<li><strong>Security Enhancement</strong>: Requires an <strong>Initialization Vector (IV)</strong> to introduce randomness.</li>
+<li><strong>Weaknesses</strong>: Vulnerable to <strong>padding oracle attacks</strong> if not properly implemented.</li>
+<li><strong>Use Case</strong>: Previously common in SSL/TLS, but replaced by authenticated modes like GCM.</li>
+</ul>
+<h3 id="counter-ctr-mode"><strong>Counter (CTR) Mode</strong></h3>
+<ul>
+<li><strong>How It Works</strong>: Converts AES into a <strong>stream cipher</strong> by encrypting an incrementing counter value.</li>
+<li><strong>Security Enhancement</strong>: Requires a <strong>unique nonce</strong> for security.</li>
+<li><strong>Efficiency</strong>: Highly parallelizable, making it faster than CBC.</li>
+<li><strong>Use Case</strong>: Used in high-performance encryption applications like disk encryption.</li>
+</ul>
+<h3 id="galoiscounter-mode-gcm"><strong>Galois/Counter Mode (GCM)</strong></h3>
+<ul>
+<li><strong>How It Works</strong>: Combines CTR mode with <strong>Galois Message Authentication Code (GMAC)</strong>.</li>
+<li><strong>Security Enhancement</strong>: Provides both encryption and integrity verification.</li>
+<li><strong>Performance</strong>: Efficient and supports parallel processing.</li>
+<li><strong>Use Case</strong>: Used in TLS 1.2/1.3, VPNs, and secure communications.</li>
+</ul>
+<h2 id="aes-encrypt--decrypt---examples">AES Encrypt / Decrypt - Examples</h2>
+<p>To demonstrate AES encryption and decryption, we will use <strong>Python</strong>.</p>
+<h3 id="install-required-libraries">Install Required Libraries</h3>
+<pre class=" language-sh"><code class="prism  language-sh">pip install pyaes pbkdf2
+
+</code></pre>
+<h3 id="simple-aes-ctr-example">Simple AES-CTR Example</h3>
+<p>This example demonstrates AES-256-CTR encryption and decryption without authentication.</p>
+<h4 id="password-to-key-derivation">Password to Key Derivation</h4>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">import</span> pyaes<span class="token punctuation">,</span> pbkdf2<span class="token punctuation">,</span> binascii<span class="token punctuation">,</span> os<span class="token punctuation">,</span> secrets
+
+<span class="token comment"># Derive a 256-bit AES encryption key from the password</span>
+password <span class="token operator">=</span> <span class="token string">"s3cr3t*c0d3"</span>
+passwordSalt <span class="token operator">=</span> os<span class="token punctuation">.</span>urandom<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span>
+key <span class="token operator">=</span> pbkdf2<span class="token punctuation">.</span>PBKDF2<span class="token punctuation">(</span>password<span class="token punctuation">,</span> passwordSalt<span class="token punctuation">)</span><span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'AES encryption key:'</span><span class="token punctuation">,</span> binascii<span class="token punctuation">.</span>hexlify<span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+</code></pre>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<p><strong>Importing Required Libraries:</strong></p>
+<ul>
+<li><code>pyaes</code>: A lightweight AES implementation in pure Python.</li>
+<li><code>pbkdf2</code>: Implements PBKDF2 for secure key derivation.</li>
+<li><code>binascii</code>: Used for binary-to-ASCII conversions.</li>
+<li><code>os</code>: Generates cryptographic random values.</li>
+<li><code>secrets</code>: Provides secure random number generation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Password-Based Key Derivation:</strong></p>
+<ul>
+<li>Uses a password to generate an encryption key.</li>
+<li>A random <strong>16-byte salt</strong> (<code>passwordSalt</code>) is generated to add randomness.</li>
+<li>PBKDF2 derives a <strong>256-bit encryption key</strong>.</li>
+<li>The key is printed in hexadecimal format.</li>
+</ul>
+</li>
+</ul>
+<h4 id="aes-encryption-ctr-block-mode">AES Encryption (CTR Block Mode)</h4>
+<pre class=" language-python"><code class="prism  language-python">iv <span class="token operator">=</span> secrets<span class="token punctuation">.</span>randbits<span class="token punctuation">(</span><span class="token number">256</span><span class="token punctuation">)</span>
+plaintext <span class="token operator">=</span> <span class="token string">"Text for encryption"</span>
+aes <span class="token operator">=</span> pyaes<span class="token punctuation">.</span>AESModeOfOperationCTR<span class="token punctuation">(</span>key<span class="token punctuation">,</span> pyaes<span class="token punctuation">.</span>Counter<span class="token punctuation">(</span>iv<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ciphertext <span class="token operator">=</span> aes<span class="token punctuation">.</span>encrypt<span class="token punctuation">(</span>plaintext<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Encrypted:'</span><span class="token punctuation">,</span> binascii<span class="token punctuation">.</span>hexlify<span class="token punctuation">(</span>ciphertext<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+</code></pre>
+<h4 id="aes-decryption-ctr-block-mode">AES Decryption (CTR Block Mode)</h4>
+<pre class=" language-python"><code class="prism  language-python">aes <span class="token operator">=</span> pyaes<span class="token punctuation">.</span>AESModeOfOperationCTR<span class="token punctuation">(</span>key<span class="token punctuation">,</span> pyaes<span class="token punctuation">.</span>Counter<span class="token punctuation">(</span>iv<span class="token punctuation">)</span><span class="token punctuation">)</span>
+decrypted <span class="token operator">=</span> aes<span class="token punctuation">.</span>decrypt<span class="token punctuation">(</span>ciphertext<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'Decrypted:'</span><span class="token punctuation">,</span> decrypted<span class="token punctuation">)</span>
+
+</code></pre>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>
+<p><strong>IV (Nonce) Generation:</strong></p>
+<ul>
+<li>A <strong>256-bit random IV</strong> is generated using <code>secrets.randbits(256)</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>AES-CTR Mode Setup:</strong></p>
+<ul>
+<li>Initializes AES with <strong>CTR mode</strong> using the key and IV.</li>
+<li>CTR mode turns AES into a <strong>stream cipher</strong>, making encryption faster.</li>
+</ul>
+</li>
+<li>
+<p><strong>Encryption Process:</strong></p>
+<ul>
+<li>Encrypts the plaintext using AES-CTR mode.</li>
+<li>The result is stored in <code>ciphertext</code> and printed in hex format.</li>
+</ul>
+</li>
+<li>
+<p><strong>Decryption Process:</strong></p>
+<ul>
+<li>Uses the same key and IV to decrypt the ciphertext.</li>
+<li>Retrieves the original plaintext.</li>
+</ul>
+</li>
+</ul>
+<h3 id="aes-256-gcm-example">AES-256-GCM Example</h3>
+<p>AES-GCM provides authenticated encryption and is widely used in secure applications.</p>
+<h4 id="install-pycryptodome-library">Install Pycryptodome Library</h4>
+<pre class=" language-sh"><code class="prism  language-sh">pip install pycryptodome
+
+</code></pre>
+<h4 id="aes-256-gcm-encryption--decryption">AES-256-GCM Encryption &amp; Decryption</h4>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">from</span> Crypto<span class="token punctuation">.</span>Cipher <span class="token keyword">import</span> AES
+<span class="token keyword">import</span> binascii<span class="token punctuation">,</span> os
+
+<span class="token keyword">def</span> <span class="token function">encrypt_AES_GCM</span><span class="token punctuation">(</span>msg<span class="token punctuation">,</span> secretKey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    aesCipher <span class="token operator">=</span> AES<span class="token punctuation">.</span>new<span class="token punctuation">(</span>secretKey<span class="token punctuation">,</span> AES<span class="token punctuation">.</span>MODE_GCM<span class="token punctuation">)</span>
+    ciphertext<span class="token punctuation">,</span> authTag <span class="token operator">=</span> aesCipher<span class="token punctuation">.</span>encrypt_and_digest<span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>ciphertext<span class="token punctuation">,</span> aesCipher<span class="token punctuation">.</span>nonce<span class="token punctuation">,</span> authTag<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">decrypt_AES_GCM</span><span class="token punctuation">(</span>encryptedMsg<span class="token punctuation">,</span> secretKey<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token punctuation">(</span>ciphertext<span class="token punctuation">,</span> nonce<span class="token punctuation">,</span> authTag<span class="token punctuation">)</span> <span class="token operator">=</span> encryptedMsg
+    aesCipher <span class="token operator">=</span> AES<span class="token punctuation">.</span>new<span class="token punctuation">(</span>secretKey<span class="token punctuation">,</span> AES<span class="token punctuation">.</span>MODE_GCM<span class="token punctuation">,</span> nonce<span class="token punctuation">)</span>
+    plaintext <span class="token operator">=</span> aesCipher<span class="token punctuation">.</span>decrypt_and_verify<span class="token punctuation">(</span>ciphertext<span class="token punctuation">,</span> authTag<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> plaintext
+
+secretKey <span class="token operator">=</span> os<span class="token punctuation">.</span>urandom<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">)</span>  <span class="token comment"># 256-bit random encryption key</span>
+msg <span class="token operator">=</span> b<span class="token string">'Message for AES-256-GCM'</span>
+encryptedMsg <span class="token operator">=</span> encrypt_AES_GCM<span class="token punctuation">(</span>msg<span class="token punctuation">,</span> secretKey<span class="token punctuation">)</span>
+decryptedMsg <span class="token operator">=</span> decrypt_AES_GCM<span class="token punctuation">(</span>encryptedMsg<span class="token punctuation">,</span> secretKey<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Decrypted message:"</span><span class="token punctuation">,</span> decryptedMsg<span class="token punctuation">)</span>
+
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>AES is the gold standard for symmetric encryption due to its security, speed, and flexibility. With block modes like <strong>AES-CTR</strong> and <strong>AES-GCM</strong>, it provides both encryption and authentication, making it essential for modern security applications.</p>
+</div>
+</body>
+
+</html>

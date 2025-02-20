@@ -1,0 +1,376 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 1</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="presentation-on-distributed-record-keeping-and-blockchain-concepts">Presentation on Distributed Record Keeping and Blockchain Concepts</h1>
+<h2 id="slide-1-need-for-distributed-record-keeping">Slide 1: <strong>Need for Distributed Record Keeping</strong></h2>
+<h3 id="what-is-distributed-record-keeping">What is Distributed Record Keeping?</h3>
+<p>Distributed record keeping refers to the practice of storing data across multiple nodes or computers in a network, rather than in a single, centralized system. Each participant in the network holds a copy of the data, ensuring that the system is resilient to failures and tampering.</p>
+<h3 id="why-do-we-need-it">Why Do We Need It?</h3>
+<ol>
+<li>
+<p><strong>Centralized Systems’ Drawbacks</strong>:</p>
+<ul>
+<li>In a centralized system, data is stored in one location or controlled by one authority, making it vulnerable to:
+<ul>
+<li><strong>Single Point of Failure</strong>: If the central server crashes or is hacked, the entire system is compromised.</li>
+<li><strong>Lack of Trust</strong>: Users must trust a single entity to manage and secure their data.</li>
+<li><strong>Transparency Issues</strong>: Users cannot independently verify the integrity of the system.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Advantages of Distributed Systems</strong>:</p>
+<ul>
+<li><strong>Fault Tolerance</strong>: Even if some nodes fail, others can keep the system operational.</li>
+<li><strong>Decentralization</strong>: No single authority controls the system, reducing the risk of misuse of power.</li>
+<li><strong>Transparency and Verifiability</strong>: Data is replicated across nodes, and any changes are easily traceable.</li>
+</ul>
+</li>
+</ol>
+<h3 id="real-world-applications">Real-World Applications:</h3>
+<ul>
+<li><strong>Finance</strong>: Cryptocurrencies like Bitcoin use distributed ledgers to record transactions without the need for banks.</li>
+<li><strong>Supply Chains</strong>: Tracking goods from production to delivery ensures transparency.</li>
+<li><strong>Healthcare</strong>: Patient records can be securely shared among hospitals while maintaining privacy.</li>
+</ul>
+<h3 id="takeaway">Takeaway:</h3>
+<p>Distributed record keeping builds systems that are more secure, transparent, and resilient. It is a foundation for technologies like blockchain that address the shortcomings of centralized systems.</p>
+<hr>
+<h2 id="slide-2-modeling-faults-and-adversaries">Slide 2: <strong>Modeling Faults and Adversaries</strong></h2>
+<h3 id="what-are-faults">What Are Faults?</h3>
+<p>Faults are errors or failures that occur in a distributed system. They can disrupt operations and affect the reliability of the system.</p>
+<h3 id="types-of-faults">Types of Faults:</h3>
+<ol>
+<li>
+<p><strong>Crash Faults</strong>:</p>
+<ul>
+<li>A node in the system stops working unexpectedly.</li>
+<li>Example: A server crashing during a power outage.</li>
+</ul>
+</li>
+<li>
+<p><strong>Omission Faults</strong>:</p>
+<ul>
+<li>A node fails to send or receive messages.</li>
+<li>Example: Network congestion causes delays in message delivery.</li>
+</ul>
+</li>
+<li>
+<p><strong>Timing Faults</strong>:</p>
+<ul>
+<li>Messages take too long to reach their destination, violating timing constraints.</li>
+<li>Example: A transaction confirmation takes too long, causing delays.</li>
+</ul>
+</li>
+<li>
+<p><strong>Byzantine Faults</strong>:</p>
+<ul>
+<li>Nodes behave maliciously, sending false or inconsistent information to others.</li>
+<li>Example: A hacked node manipulates data to mislead the system.</li>
+</ul>
+</li>
+</ol>
+<h3 id="understanding-adversaries">Understanding Adversaries:</h3>
+<p>An adversary in a distributed system is any entity that tries to disrupt or exploit the system for malicious purposes.</p>
+<h4 id="types-of-adversaries">Types of Adversaries:</h4>
+<ul>
+<li><strong>Passive Adversaries</strong>:
+<ul>
+<li>Simply observe and gather information but do not interfere.</li>
+<li>Example: Eavesdropping on encrypted communications.</li>
+</ul>
+</li>
+<li><strong>Active Adversaries</strong>:
+<ul>
+<li>Actively disrupt the system by sending false data, corrupting nodes, or blocking communications.</li>
+<li>Example: A hacker modifying blockchain transactions.</li>
+</ul>
+</li>
+</ul>
+<h3 id="why-it-matters">Why It Matters:</h3>
+<p>Modeling faults and adversaries is critical to designing systems that are robust against attacks and failures. Distributed systems, especially blockchain, use fault-tolerant and adversary-resistant mechanisms to ensure reliability.</p>
+<hr>
+<h2 id="slide-3-byzantine-generals-problem">Slide 3: <strong>Byzantine Generals Problem</strong></h2>
+<h3 id="what-is-the-byzantine-generals-problem">What Is the Byzantine Generals Problem?</h3>
+<p>The Byzantine Generals Problem is a classic analogy to explain the challenges of reaching agreement in a distributed system, especially when some participants (nodes) may act maliciously.</p>
+<h3 id="the-scenario">The Scenario:</h3>
+<ul>
+<li>Imagine several generals of the Byzantine army encircling a city. They must agree on a plan (attack or retreat) to succeed.</li>
+<li>Some generals may be traitors, intentionally spreading false information to disrupt the plan.</li>
+</ul>
+<h3 id="the-problem">The Problem:</h3>
+<ol>
+<li>All loyal generals must agree on the same decision (e.g., attack or retreat).</li>
+<li>The decision must reflect the input from the majority of honest generals, even if traitors exist.</li>
+</ol>
+<h3 id="implications-in-distributed-systems">Implications in Distributed Systems:</h3>
+<ul>
+<li>The problem illustrates the difficulty of achieving consensus in a system where some participants may act dishonestly.</li>
+<li>It highlights the need for mechanisms to ensure that the system can tolerate malicious behavior.</li>
+</ul>
+<h3 id="real-world-solution">Real-World Solution:</h3>
+<ul>
+<li><strong>Byzantine Fault Tolerance (BFT)</strong>:
+<ul>
+<li>Algorithms like Practical Byzantine Fault Tolerance (PBFT) allow distributed systems to reach consensus even if up to one-third of nodes are malicious.</li>
+</ul>
+</li>
+</ul>
+<h3 id="importance">Importance:</h3>
+<p>Understanding the Byzantine Generals Problem helps in designing systems like blockchain, where consensus is critical for maintaining data integrity and trust.</p>
+<hr>
+<h2 id="slide-4-consensus-algorithms-and-their-scalability-problems">Slide 4: <strong>Consensus Algorithms and Their Scalability Problems</strong></h2>
+<h3 id="what-is-consensus">What Is Consensus?</h3>
+<p>Consensus is the process by which nodes in a distributed system agree on a single version of the truth. For example, in blockchain, it ensures that all nodes agree on the state of the ledger (e.g., which transactions are valid).</p>
+<h3 id="common-consensus-algorithms">Common Consensus Algorithms:</h3>
+<ol>
+<li>
+<p><strong>Proof of Work (PoW)</strong>:</p>
+<ul>
+<li>Nodes compete to solve complex mathematical problems.</li>
+<li>The winner adds a new block to the blockchain.</li>
+<li>Example: Bitcoin uses PoW.</li>
+<li><strong>Challenges</strong>: High energy consumption, slow transaction speeds.</li>
+</ul>
+</li>
+<li>
+<p><strong>Proof of Stake (PoS)</strong>:</p>
+<ul>
+<li>Nodes with higher stakes (e.g., more cryptocurrency) are more likely to validate blocks.</li>
+<li>Example: Ethereum 2.0.</li>
+<li><strong>Challenges</strong>: Risk of centralization and “nothing at stake” attacks.</li>
+</ul>
+</li>
+<li>
+<p><strong>Delegated Proof of Stake (DPoS)</strong>:</p>
+<ul>
+<li>Users vote for delegates who validate transactions on their behalf.</li>
+<li><strong>Challenges</strong>: Power can become concentrated among a few delegates.</li>
+</ul>
+</li>
+<li>
+<p><strong>Practical Byzantine Fault Tolerance (PBFT)</strong>:</p>
+<ul>
+<li>PBFT (Practical Byzantine Fault Tolerance) is a consensus algorithm designed to work in distributed systems, ensuring agreement among nodes even when some act maliciously.</li>
+<li>It is particularly useful in systems where nodes may fail or behave unpredictably (i.e., Byzantine faults).</li>
+</ul>
+</li>
+</ol>
+<h3 id="how-pbft-works">How PBFT Works:</h3>
+<ol>
+<li><strong>Nodes</strong>:
+<ul>
+<li>A distributed system has a group of nodes, where up to one-third of the nodes can be faulty or malicious.</li>
+</ul>
+</li>
+<li><strong>Phases</strong>:
+<ul>
+<li>PBFT operates in three phases to achieve consensus:
+<ol>
+<li><strong>Pre-prepare</strong>: The leader (primary node) proposes a request or transaction.</li>
+<li><strong>Prepare</strong>: Other nodes (replicas) validate and agree on the proposal.</li>
+<li><strong>Commit</strong>: Once enough nodes agree, the transaction is committed.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong>Quorum Requirement</strong>:
+<ul>
+<li>At least ( \lceil 2f + 1 \rceil ) honest nodes are needed to achieve consensus, where ( f ) is the maximum number of faulty nodes.</li>
+</ul>
+</li>
+</ol>
+<h3 id="strengths-of-pbft">Strengths of PBFT:</h3>
+<ul>
+<li>Resistant to Byzantine faults.</li>
+<li>Low energy consumption compared to Proof of Work (PoW).</li>
+</ul>
+<h3 id="weaknesses-of-pbft">Weaknesses of PBFT:</h3>
+<ul>
+<li>Scalability issues: Communication overhead increases quadratically as the number of nodes grows.</li>
+<li>Best suited for small to medium-sized networks.</li>
+</ul>
+<h3 id="diagram-pbft-workflow">Diagram: PBFT Workflow</h3>
+<pre class=" language-mermaid"><svg id="mermaid-svg-kps3xAKT3KKK7q2C" width="100%" xmlns="http://www.w3.org/2000/svg" height="711" style="max-width: 1069px;" viewBox="-50 -10 1069 711"><style>#mermaid-svg-kps3xAKT3KKK7q2C{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#000000;}#mermaid-svg-kps3xAKT3KKK7q2C .error-icon{fill:#552222;}#mermaid-svg-kps3xAKT3KKK7q2C .error-text{fill:#552222;stroke:#552222;}#mermaid-svg-kps3xAKT3KKK7q2C .edge-thickness-normal{stroke-width:2px;}#mermaid-svg-kps3xAKT3KKK7q2C .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg-kps3xAKT3KKK7q2C .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg-kps3xAKT3KKK7q2C .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg-kps3xAKT3KKK7q2C .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg-kps3xAKT3KKK7q2C .marker{fill:#666;stroke:#666;}#mermaid-svg-kps3xAKT3KKK7q2C .marker.cross{stroke:#666;}#mermaid-svg-kps3xAKT3KKK7q2C svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg-kps3xAKT3KKK7q2C .actor{stroke:hsl(0,0%,83%);fill:#eee;}#mermaid-svg-kps3xAKT3KKK7q2C text.actor > tspan{fill:#333;stroke:none;}#mermaid-svg-kps3xAKT3KKK7q2C .actor-line{stroke:#666;}#mermaid-svg-kps3xAKT3KKK7q2C .messageLine0{stroke-width:1.5;stroke-dasharray:none;stroke:#333;}#mermaid-svg-kps3xAKT3KKK7q2C .messageLine1{stroke-width:1.5;stroke-dasharray:2,2;stroke:#333;}#mermaid-svg-kps3xAKT3KKK7q2C #arrowhead path{fill:#333;stroke:#333;}#mermaid-svg-kps3xAKT3KKK7q2C .sequenceNumber{fill:white;}#mermaid-svg-kps3xAKT3KKK7q2C #sequencenumber{fill:#333;}#mermaid-svg-kps3xAKT3KKK7q2C #crosshead path{fill:#333;stroke:#333;}#mermaid-svg-kps3xAKT3KKK7q2C .messageText{fill:#333;stroke:#333;}#mermaid-svg-kps3xAKT3KKK7q2C .labelBox{stroke:hsl(0,0%,83%);fill:#eee;}#mermaid-svg-kps3xAKT3KKK7q2C .labelText,#mermaid-svg-kps3xAKT3KKK7q2C .labelText > tspan{fill:#333;stroke:none;}#mermaid-svg-kps3xAKT3KKK7q2C .loopText,#mermaid-svg-kps3xAKT3KKK7q2C .loopText > tspan{fill:#333;stroke:none;}#mermaid-svg-kps3xAKT3KKK7q2C .loopLine{stroke-width:2px;stroke-dasharray:2,2;stroke:hsl(0,0%,83%);fill:hsl(0,0%,83%);}#mermaid-svg-kps3xAKT3KKK7q2C .note{stroke:hsl(60,100%,23.3333333333%);fill:#ffa;}#mermaid-svg-kps3xAKT3KKK7q2C .noteText,#mermaid-svg-kps3xAKT3KKK7q2C .noteText > tspan{fill:#333;stroke:none;}#mermaid-svg-kps3xAKT3KKK7q2C .activation0{fill:#f4f4f4;stroke:#666;}#mermaid-svg-kps3xAKT3KKK7q2C .activation1{fill:#f4f4f4;stroke:#666;}#mermaid-svg-kps3xAKT3KKK7q2C .activation2{fill:#f4f4f4;stroke:#666;}#mermaid-svg-kps3xAKT3KKK7q2C:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-svg-kps3xAKT3KKK7q2C sequence{fill:apa;}</style><g></g><g><line id="actor15" x1="75" y1="5" x2="75" y2="700" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">Client</tspan></text></g><g><line id="actor16" x1="275" y1="5" x2="275" y2="700" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Primary Node</tspan></text></g><g><line id="actor17" x1="494" y1="5" x2="494" y2="700" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="419" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="494" y="32.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="494" dy="0">Replica Node 1</tspan></text></g><g><line id="actor18" x1="694" y1="5" x2="694" y2="700" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="619" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="694" y="32.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="694" dy="0">Replica Node 2</tspan></text></g><g><line id="actor19" x1="894" y1="5" x2="894" y2="700" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="819" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="894" y="32.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="894" dy="0">Replica Node 3</tspan></text></g><defs><marker id="arrowhead" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" style="stroke-dasharray: 0px, 0px;" stroke-width="1px" d="M 9,2 V 6 L16,4 Z"></path><path fill="none" stroke="#000000" style="stroke-dasharray: 0px, 0px;" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7"></path></marker></defs><defs><marker id="filled-head" refX="18" refY="7" markerWidth="20" markerHeight="28" orient="auto"><path d="M 18,7 L9,13 L14,7 L9,1 Z"></path></marker></defs><defs><marker id="sequencenumber" refX="15" refY="15" markerWidth="60" markerHeight="40" orient="auto"><circle cx="15" cy="15" r="6"></circle></marker></defs><text x="175" y="80" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Sends Request</text><line x1="75" y1="115" x2="275" y2="115" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="385" y="130" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Pre-Prepare Message</text><line x1="275" y1="165" x2="494" y2="165" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="485" y="180" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Pre-Prepare Message</text><line x1="275" y1="215" x2="694" y2="215" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="585" y="230" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Pre-Prepare Message</text><line x1="275" y1="265" x2="894" y2="265" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="385" y="280" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Prepare Message</text><line x1="494" y1="315" x2="275" y2="315" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="485" y="330" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Prepare Message</text><line x1="694" y1="365" x2="275" y2="365" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="585" y="380" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Prepare Message</text><line x1="894" y1="415" x2="275" y2="415" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="385" y="430" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Commit Message</text><line x1="494" y1="465" x2="275" y2="465" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="485" y="480" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Commit Message</text><line x1="694" y1="515" x2="275" y2="515" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="585" y="530" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Commit Message</text><line x1="894" y1="565" x2="275" y2="565" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><text x="175" y="580" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" style="font-family: &quot;trebuchet ms&quot;, verdana, arial, sans-serif; font-weight: 400;" class="messageText" dy="1em">Response</text><line x1="275" y1="615" x2="75" y2="615" class="messageLine0" stroke-width="2" stroke="none" style="fill: none;" marker-end="url(#arrowhead)"></line><g><rect x="0" y="635" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="667.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">Client</tspan></text></g><g><rect x="200" y="635" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="667.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Primary Node</tspan></text></g><g><rect x="419" y="635" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="494" y="667.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="494" dy="0">Replica Node 1</tspan></text></g><g><rect x="619" y="635" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="694" y="667.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="694" dy="0">Replica Node 2</tspan></text></g><g><rect x="819" y="635" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="894" y="667.5" style="text-anchor: middle; font-weight: 400; font-family: &quot;Open-Sans&quot;, &quot;sans-serif&quot;;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="894" dy="0">Replica Node 3</tspan></text></g></svg></pre>
+<h3 id="scalability-problems">Scalability Problems:</h3>
+<ul>
+<li><strong>Throughput</strong>:
+<ul>
+<li>Limited number of transactions per second.</li>
+<li>Bitcoin processes ~7 transactions per second (TPS), compared to Visa’s ~24,000 TPS.</li>
+</ul>
+</li>
+<li><strong>Latency</strong>:
+<ul>
+<li>Time taken to reach consensus can delay transaction confirmations.</li>
+</ul>
+</li>
+<li><strong>Energy Usage</strong>:
+<ul>
+<li>PoW requires enormous computational power, contributing to environmental concerns.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="slide-5-nakamotos-concept-with-blockchain-based-cryptocurrency">Slide 5: <strong>Nakamoto’s Concept with Blockchain-Based Cryptocurrency</strong></h2>
+<h3 id="what-is-nakamotos-concept">What Is Nakamoto’s Concept?</h3>
+<p>Satoshi Nakamoto, the creator of Bitcoin, proposed a decentralized digital currency system based on blockchain technology.</p>
+<h3 id="key-innovations">Key Innovations:</h3>
+<ol>
+<li>
+<p><strong>Blockchain</strong>:</p>
+<ul>
+<li>A chain of blocks containing transaction data.</li>
+<li>Each block is linked to the previous one using cryptographic hash pointers, making it immutable.</li>
+<li>Nodes maintain and validate the blockchain collectively.</li>
+</ul>
+</li>
+<li>
+<p><strong>Proof of Work (PoW)</strong>:</p>
+<ul>
+<li>Ensures consensus by requiring nodes to solve computational puzzles.</li>
+<li>Makes it expensive for attackers to alter the blockchain.</li>
+</ul>
+</li>
+<li>
+<p><strong>Decentralization</strong>:</p>
+<ul>
+<li>Removes the need for a central authority (like a bank) to verify transactions.</li>
+<li>Relies on a peer-to-peer network for trust.</li>
+</ul>
+</li>
+</ol>
+<h3 id="why-it-matters-1">Why It Matters:</h3>
+<ul>
+<li>Bitcoin solved the “double-spending problem,” ensuring that digital money cannot be spent more than once.</li>
+<li>The system is secure, transparent, and operates without intermediaries.</li>
+</ul>
+<hr>
+<h2 id="slide-6-technologies-borrowed-in-blockchain">Slide 6: <strong>Technologies Borrowed in Blockchain</strong></h2>
+<h3 id="blockchain-is-built-on-existing-ideas">Blockchain Is Built on Existing Ideas:</h3>
+<ol>
+<li><strong>Hash Pointers</strong>:
+<ul>
+<li>A <strong>hash pointer</strong> is a data structure used in blockchain to link blocks of data securely.</li>
+<li>It combines:
+<ol>
+<li><strong>Pointer</strong>: Refers to the location of the previous block in the chain.</li>
+<li><strong>Hash</strong>: Cryptographic hash of the data in the previous block.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="how-hash-pointers-work">How Hash Pointers Work:</h3>
+<ul>
+<li>Each block in the chain contains:
+<ul>
+<li>A list of transactions or data.</li>
+<li>A hash pointer linking it to the previous block.</li>
+</ul>
+</li>
+<li>The hash pointer ensures:
+<ul>
+<li><strong>Immutability</strong>: Any change to a block’s data changes its hash, making tampering detectable.</li>
+<li><strong>Integrity</strong>: The entire chain is secured because each block depends on the hash of its predecessor.</li>
+</ul>
+</li>
+</ul>
+<h3 id="applications-of-hash-pointers">Applications of Hash Pointers:</h3>
+<ul>
+<li><strong>Blockchain</strong>: Used to maintain the chain structure.</li>
+<li><strong>Merkle Trees</strong>: A hierarchical data structure where hash pointers verify data integrity efficiently.</li>
+</ul>
+<h3 id="diagram-hash-pointer-in-blockchain">Diagram: Hash Pointer in Blockchain</h3>
+<pre class=" language-mermaid"><svg id="mermaid-svg-C3m0AuEg96G9z5TM" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="309.58331298828125" style="max-width: 106.29998779296875px;" viewBox="0 0 106.29998779296875 309.58331298828125"><style>#mermaid-svg-C3m0AuEg96G9z5TM{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#000000;}#mermaid-svg-C3m0AuEg96G9z5TM .error-icon{fill:#552222;}#mermaid-svg-C3m0AuEg96G9z5TM .error-text{fill:#552222;stroke:#552222;}#mermaid-svg-C3m0AuEg96G9z5TM .edge-thickness-normal{stroke-width:2px;}#mermaid-svg-C3m0AuEg96G9z5TM .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg-C3m0AuEg96G9z5TM .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg-C3m0AuEg96G9z5TM .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg-C3m0AuEg96G9z5TM .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg-C3m0AuEg96G9z5TM .marker{fill:#666;stroke:#666;}#mermaid-svg-C3m0AuEg96G9z5TM .marker.cross{stroke:#666;}#mermaid-svg-C3m0AuEg96G9z5TM svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg-C3m0AuEg96G9z5TM .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#000000;}#mermaid-svg-C3m0AuEg96G9z5TM .cluster-label text{fill:#333;}#mermaid-svg-C3m0AuEg96G9z5TM .cluster-label span{color:#333;}#mermaid-svg-C3m0AuEg96G9z5TM .label text,#mermaid-svg-C3m0AuEg96G9z5TM span{fill:#000000;color:#000000;}#mermaid-svg-C3m0AuEg96G9z5TM .node rect,#mermaid-svg-C3m0AuEg96G9z5TM .node circle,#mermaid-svg-C3m0AuEg96G9z5TM .node ellipse,#mermaid-svg-C3m0AuEg96G9z5TM .node polygon,#mermaid-svg-C3m0AuEg96G9z5TM .node path{fill:#eee;stroke:#999;stroke-width:1px;}#mermaid-svg-C3m0AuEg96G9z5TM .node .label{text-align:center;}#mermaid-svg-C3m0AuEg96G9z5TM .node.clickable{cursor:pointer;}#mermaid-svg-C3m0AuEg96G9z5TM .arrowheadPath{fill:#333333;}#mermaid-svg-C3m0AuEg96G9z5TM .edgePath .path{stroke:#666;stroke-width:1.5px;}#mermaid-svg-C3m0AuEg96G9z5TM .flowchart-link{stroke:#666;fill:none;}#mermaid-svg-C3m0AuEg96G9z5TM .edgeLabel{background-color:white;text-align:center;}#mermaid-svg-C3m0AuEg96G9z5TM .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#mermaid-svg-C3m0AuEg96G9z5TM .cluster rect{fill:hsl(210,66.6666666667%,95%);stroke:#26a;stroke-width:1px;}#mermaid-svg-C3m0AuEg96G9z5TM .cluster text{fill:#333;}#mermaid-svg-C3m0AuEg96G9z5TM .cluster span{color:#333;}#mermaid-svg-C3m0AuEg96G9z5TM div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(-160,0%,93.3333333333%);border:1px solid #26a;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg-C3m0AuEg96G9z5TM:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-svg-C3m0AuEg96G9z5TM flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-Block1 LE-Block2" style="opacity: 1;" id="L-Block1-Block2"><path class="path" d="M53.149993896484375,54.71665954589844L53.149993896484375,93.07498931884766L53.149993896484375,131.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead37)" style="fill:none"></path><defs><marker id="arrowhead37" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-Block2 LE-Block3" style="opacity: 1;" id="L-Block2-Block3"><path class="path" d="M53.149993896484375,178.1499786376953L53.149993896484375,216.50830841064453L53.149993896484375,254.86663818359375" marker-end="url(https://stackedit.io/app#arrowhead38)" style="fill:none"></path><defs><marker id="arrowhead38" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform="translate(53.149993896484375,93.07498931884766)"><g transform="translate(-45.149993896484375,-13.358329772949219)" class="label"><rect rx="0" ry="0" width="90.29998779296875" height="26.716659545898438"></rect><foreignObject width="90.29998779296875" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-Block1-Block2" class="edgeLabel L-LS-Block1' L-LE-Block2">Hash Pointer</span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform="translate(53.149993896484375,216.50830841064453)"><g transform="translate(-45.149993896484375,-13.358329772949219)" class="label"><rect rx="0" ry="0" width="90.29998779296875" height="26.716659545898438"></rect><foreignObject width="90.29998779296875" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-Block2-Block3" class="edgeLabel L-LS-Block2' L-LE-Block3">Hash Pointer</span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" style="opacity: 1;" id="flowchart-Block1-687" transform="translate(53.149993896484375,31.35832977294922)"><rect rx="0" ry="0" x="-35.76667022705078" y="-23.35832977294922" width="71.53334045410156" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-25.76667022705078,-13.358329772949219)"><foreignObject width="51.53334045410156" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Block 1</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-Block2-688" transform="translate(53.149993896484375,154.7916488647461)"><rect rx="0" ry="0" x="-35.76667022705078" y="-23.35832977294922" width="71.53334045410156" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-25.76667022705078,-13.358329772949219)"><foreignObject width="51.53334045410156" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Block 2</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-Block3-689" transform="translate(53.149993896484375,278.22496795654297)"><rect rx="0" ry="0" x="-35.76667022705078" y="-23.35832977294922" width="71.53334045410156" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-25.76667022705078,-13.358329772949219)"><foreignObject width="51.53334045410156" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Block 3</div></foreignObject></g></g></g></g></g></g></svg></pre>
+<ol start="2">
+<li>
+<p><strong>Consensus Mechanisms</strong>:</p>
+<ul>
+<li>Algorithms like PoW and PoS enable distributed systems to agree on the state of the ledger.</li>
+</ul>
+</li>
+<li>
+<p><strong>Byzantine Fault-Tolerant Distributed Computing</strong>:</p>
+<ul>
+<li>Ensures the system can handle malicious nodes.</li>
+</ul>
+</li>
+<li>
+<p><strong>Digital Cash</strong>:</p>
+<ul>
+<li>Concepts from earlier attempts like Chaum’s e-cash influenced Bitcoin’s design.</li>
+</ul>
+</li>
+</ol>
+<h3 id="takeaway-1">Takeaway:</h3>
+<p>Blockchain brings together ideas from cryptography, distributed computing, and digital finance to create a secure and decentralized system.</p>
+<hr>
+<h2 id="slide-6-continued-merkle-tree">Slide 6 (Continued): <strong>Merkle Tree</strong></h2>
+<h3 id="what-is-a-merkle-tree">What Is a Merkle Tree?</h3>
+<ul>
+<li>A <strong>Merkle Tree</strong> is a data structure used in blockchain to efficiently and securely verify the integrity of large sets of data.</li>
+<li>It is a <strong>binary tree</strong> where:
+<ul>
+<li><strong>Leaf nodes</strong> contain hashes of individual transactions.</li>
+<li><strong>Non-leaf nodes</strong> contain hashes of their child nodes.</li>
+<li>The <strong>root node</strong> (Merkle root) represents the combined hash of all transactions.</li>
+</ul>
+</li>
+</ul>
+<h3 id="how-it-works">How It Works:</h3>
+<ol>
+<li><strong>Data Input</strong>:
+<ul>
+<li>Transactions are hashed individually.</li>
+</ul>
+</li>
+<li><strong>Pairing and Hashing</strong>:
+<ul>
+<li>Pairs of transaction hashes are combined and hashed together to form the next level.</li>
+</ul>
+</li>
+<li><strong>Repeat Until Root</strong>:
+<ul>
+<li>The process continues until a single hash (Merkle root) is obtained.</li>
+</ul>
+</li>
+</ol>
+<h3 id="benefits-of-a-merkle-tree">Benefits of a Merkle Tree:</h3>
+<ul>
+<li><strong>Efficiency</strong>: Verifying a transaction requires checking only a small portion of the tree.</li>
+<li><strong>Integrity</strong>: Any tampering with a transaction changes the corresponding hash, invalidating the Merkle root.</li>
+<li><strong>Compact Proofs</strong>: Instead of storing all data, only the Merkle root and proof path are needed.</li>
+</ul>
+<h3 id="diagram-merkle-tree">Diagram: Merkle Tree</h3>
+<pre class=" language-mermaid"><svg id="mermaid-svg-EI1TPhm3l5pZVtiw" width="100%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="352.86663818359375" style="max-width: 763.5999755859375px;" viewBox="0 0 763.5999755859375 352.86663818359375"><style>#mermaid-svg-EI1TPhm3l5pZVtiw{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#000000;}#mermaid-svg-EI1TPhm3l5pZVtiw .error-icon{fill:#552222;}#mermaid-svg-EI1TPhm3l5pZVtiw .error-text{fill:#552222;stroke:#552222;}#mermaid-svg-EI1TPhm3l5pZVtiw .edge-thickness-normal{stroke-width:2px;}#mermaid-svg-EI1TPhm3l5pZVtiw .edge-thickness-thick{stroke-width:3.5px;}#mermaid-svg-EI1TPhm3l5pZVtiw .edge-pattern-solid{stroke-dasharray:0;}#mermaid-svg-EI1TPhm3l5pZVtiw .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-svg-EI1TPhm3l5pZVtiw .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-svg-EI1TPhm3l5pZVtiw .marker{fill:#666;stroke:#666;}#mermaid-svg-EI1TPhm3l5pZVtiw .marker.cross{stroke:#666;}#mermaid-svg-EI1TPhm3l5pZVtiw svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}#mermaid-svg-EI1TPhm3l5pZVtiw .label{font-family:"trebuchet ms",verdana,arial,sans-serif;color:#000000;}#mermaid-svg-EI1TPhm3l5pZVtiw .cluster-label text{fill:#333;}#mermaid-svg-EI1TPhm3l5pZVtiw .cluster-label span{color:#333;}#mermaid-svg-EI1TPhm3l5pZVtiw .label text,#mermaid-svg-EI1TPhm3l5pZVtiw span{fill:#000000;color:#000000;}#mermaid-svg-EI1TPhm3l5pZVtiw .node rect,#mermaid-svg-EI1TPhm3l5pZVtiw .node circle,#mermaid-svg-EI1TPhm3l5pZVtiw .node ellipse,#mermaid-svg-EI1TPhm3l5pZVtiw .node polygon,#mermaid-svg-EI1TPhm3l5pZVtiw .node path{fill:#eee;stroke:#999;stroke-width:1px;}#mermaid-svg-EI1TPhm3l5pZVtiw .node .label{text-align:center;}#mermaid-svg-EI1TPhm3l5pZVtiw .node.clickable{cursor:pointer;}#mermaid-svg-EI1TPhm3l5pZVtiw .arrowheadPath{fill:#333333;}#mermaid-svg-EI1TPhm3l5pZVtiw .edgePath .path{stroke:#666;stroke-width:1.5px;}#mermaid-svg-EI1TPhm3l5pZVtiw .flowchart-link{stroke:#666;fill:none;}#mermaid-svg-EI1TPhm3l5pZVtiw .edgeLabel{background-color:white;text-align:center;}#mermaid-svg-EI1TPhm3l5pZVtiw .edgeLabel rect{opacity:0.5;background-color:white;fill:white;}#mermaid-svg-EI1TPhm3l5pZVtiw .cluster rect{fill:hsl(210,66.6666666667%,95%);stroke:#26a;stroke-width:1px;}#mermaid-svg-EI1TPhm3l5pZVtiw .cluster text{fill:#333;}#mermaid-svg-EI1TPhm3l5pZVtiw .cluster span{color:#333;}#mermaid-svg-EI1TPhm3l5pZVtiw div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:12px;background:hsl(-160,0%,93.3333333333%);border:1px solid #26a;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-svg-EI1TPhm3l5pZVtiw:root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}#mermaid-svg-EI1TPhm3l5pZVtiw flowchart{fill:apa;}</style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath LS-T1 LE-H1" style="opacity: 1;" id="L-T1-H1"><path class="path" d="M82.69999694824219,54.71665954589844L82.69999694824219,79.71665954589844L82.69999694824219,104.71665954589844" marker-end="url(https://stackedit.io/app#arrowhead39)" style="fill:none"></path><defs><marker id="arrowhead39" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-T2 LE-H2" style="opacity: 1;" id="L-T2-H2"><path class="path" d="M282.09999084472656,54.71665954589844L282.09999084472656,79.71665954589844L282.09999084472656,104.71665954589844" marker-end="url(https://stackedit.io/app#arrowhead40)" style="fill:none"></path><defs><marker id="arrowhead40" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-T3 LE-H3" style="opacity: 1;" id="L-T3-H3"><path class="path" d="M481.49998474121094,54.71665954589844L481.49998474121094,79.71665954589844L481.49998474121094,104.71665954589844" marker-end="url(https://stackedit.io/app#arrowhead41)" style="fill:none"></path><defs><marker id="arrowhead41" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-T4 LE-H4" style="opacity: 1;" id="L-T4-H4"><path class="path" d="M680.8999786376953,54.71665954589844L680.8999786376953,79.71665954589844L680.8999786376953,104.71665954589844" marker-end="url(https://stackedit.io/app#arrowhead42)" style="fill:none"></path><defs><marker id="arrowhead42" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-H1 LE-H12" style="opacity: 1;" id="L-H1-H12"><path class="path" d="M82.69999694824219,151.43331909179688L82.69999694824219,176.43331909179688L134.24230486931341,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead43)" style="fill:none"></path><defs><marker id="arrowhead43" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-H2 LE-H12" style="opacity: 1;" id="L-H2-H12"><path class="path" d="M282.09999084472656,151.43331909179688L282.09999084472656,176.43331909179688L230.55768292365534,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead44)" style="fill:none"></path><defs><marker id="arrowhead44" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-H3 LE-H34" style="opacity: 1;" id="L-H3-H34"><path class="path" d="M481.49998474121094,151.43331909179688L481.49998474121094,176.43331909179688L533.0422926622822,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead45)" style="fill:none"></path><defs><marker id="arrowhead45" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-H4 LE-H34" style="opacity: 1;" id="L-H4-H34"><path class="path" d="M680.8999786376953,151.43331909179688L680.8999786376953,176.43331909179688L629.357670716624,201.43331909179688" marker-end="url(https://stackedit.io/app#arrowhead46)" style="fill:none"></path><defs><marker id="arrowhead46" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-H12 LE-Root" style="opacity: 1;" id="L-H12-Root"><path class="path" d="M182.39999389648438,248.1499786376953L182.39999389648438,273.1499786376953L329.3916549682617,308.7982807317904" marker-end="url(https://stackedit.io/app#arrowhead47)" style="fill:none"></path><defs><marker id="arrowhead47" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g><g class="edgePath LS-H34 LE-Root" style="opacity: 1;" id="L-H34-Root"><path class="path" d="M581.1999816894531,248.1499786376953L581.1999816894531,273.1499786376953L434.2083206176758,308.7982807317904" marker-end="url(https://stackedit.io/app#arrowhead48)" style="fill:none"></path><defs><marker id="arrowhead48" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1px; stroke-dasharray: 1px, 0px;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-T1-H1" class="edgeLabel L-LS-T1' L-LE-H1"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-T2-H2" class="edgeLabel L-LS-T2' L-LE-H2"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-T3-H3" class="edgeLabel L-LS-T3' L-LE-H3"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-T4-H4" class="edgeLabel L-LS-T4' L-LE-H4"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-H1-H12" class="edgeLabel L-LS-H1' L-LE-H12"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-H2-H12" class="edgeLabel L-LS-H2' L-LE-H12"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-H3-H34" class="edgeLabel L-LS-H3' L-LE-H34"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-H4-H34" class="edgeLabel L-LS-H4' L-LE-H34"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-H12-Root" class="edgeLabel L-LS-H12' L-LE-Root"></span></div></foreignObject></g></g><g class="edgeLabel" style="opacity: 1;" transform=""><g transform="translate(0,0)" class="label"><rect rx="0" ry="0" width="0" height="0"></rect><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span id="L-L-H34-Root" class="edgeLabel L-LS-H34' L-LE-Root"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node default" style="opacity: 1;" id="flowchart-T1-725" transform="translate(82.69999694824219,31.35832977294922)"><rect rx="0" ry="0" x="-74.69999694824219" y="-23.35832977294922" width="149.39999389648438" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-64.69999694824219,-13.358329772949219)"><foreignObject width="129.39999389648438" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Transaction 1 (T1)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-T2-726" transform="translate(282.09999084472656,31.35832977294922)"><rect rx="0" ry="0" x="-74.69999694824219" y="-23.35832977294922" width="149.39999389648438" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-64.69999694824219,-13.358329772949219)"><foreignObject width="129.39999389648438" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Transaction 2 (T2)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-T3-727" transform="translate(481.49998474121094,31.35832977294922)"><rect rx="0" ry="0" x="-74.69999694824219" y="-23.35832977294922" width="149.39999389648438" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-64.69999694824219,-13.358329772949219)"><foreignObject width="129.39999389648438" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Transaction 3 (T3)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-T4-728" transform="translate(680.8999786376953,31.35832977294922)"><rect rx="0" ry="0" x="-74.69999694824219" y="-23.35832977294922" width="149.39999389648438" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-64.69999694824219,-13.358329772949219)"><foreignObject width="129.39999389648438" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Transaction 4 (T4)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-H1-729" transform="translate(82.69999694824219,128.07498931884766)"><rect rx="0" ry="0" x="-51.366668701171875" y="-23.35832977294922" width="102.73333740234375" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-41.366668701171875,-13.358329772949219)"><foreignObject width="82.73333740234375" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Hash 1 (H1)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-H2-730" transform="translate(282.09999084472656,128.07498931884766)"><rect rx="0" ry="0" x="-51.366668701171875" y="-23.35832977294922" width="102.73333740234375" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-41.366668701171875,-13.358329772949219)"><foreignObject width="82.73333740234375" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Hash 2 (H2)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-H3-731" transform="translate(481.49998474121094,128.07498931884766)"><rect rx="0" ry="0" x="-51.366668701171875" y="-23.35832977294922" width="102.73333740234375" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-41.366668701171875,-13.358329772949219)"><foreignObject width="82.73333740234375" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Hash 3 (H3)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-H4-732" transform="translate(680.8999786376953,128.07498931884766)"><rect rx="0" ry="0" x="-51.366668701171875" y="-23.35832977294922" width="102.73333740234375" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-41.366668701171875,-13.358329772949219)"><foreignObject width="82.73333740234375" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Hash 4 (H4)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-H12-733" transform="translate(182.39999389648438,224.7916488647461)"><rect rx="0" ry="0" x="-59.75" y="-23.35832977294922" width="119.5" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-49.75,-13.358329772949219)"><foreignObject width="99.5" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Hash 12 (H12)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-H34-734" transform="translate(581.1999816894531,224.7916488647461)"><rect rx="0" ry="0" x="-59.75" y="-23.35832977294922" width="119.5" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-49.75,-13.358329772949219)"><foreignObject width="99.5" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Hash 34 (H34)</div></foreignObject></g></g></g><g class="node default" style="opacity: 1;" id="flowchart-Root-735" transform="translate(381.79998779296875,321.50830841064453)"><rect rx="0" ry="0" x="-52.40833282470703" y="-23.35832977294922" width="104.81666564941406" height="46.71665954589844" class="label-container"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-42.40833282470703,-13.358329772949219)"><foreignObject width="84.81666564941406" height="26.716659545898438"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Merkle Root</div></foreignObject></g></g></g></g></g></g></svg></pre>
+<h3 id="real-world-use-case-in-blockchain">Real-World Use Case in Blockchain:</h3>
+<ul>
+<li>In Bitcoin, the Merkle root of a block summarizes all transactions in that block.</li>
+<li>To verify a single transaction, only the proof path (hashes leading to the Merkle root) is needed, making it efficient for nodes with limited resources.</li>
+</ul>
+<hr>
+<h2 id="slide-7-conclusion">Slide 7: <strong>Conclusion</strong></h2>
+<h3 id="key-takeaways">Key Takeaways:</h3>
+<ol>
+<li>Distributed record keeping overcomes the limitations of centralized systems.</li>
+<li>Modeling faults and adversaries is essential for designing secure systems.</li>
+<li>The Byzantine Generals Problem highlights the challenges of consensus in untrusted environments.</li>
+<li>Consensus algorithms power blockchain but face scalability challenges.</li>
+<li>Nakamoto’s blockchain concept transformed digital currency and trust.</li>
+<li>Blockchain borrows and integrates established technologies to ensure security and efficiency.</li>
+</ol>
+<hr>
+</div>
+</body>
+
+</html>
