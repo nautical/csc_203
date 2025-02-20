@@ -681,14 +681,14 @@ pubKey: 02c324648931b89e3e8a0fc42c96e8e3be2e42812986573a40d46563bceaf75110
 <p>Two parties (Alice &amp; Bob) agree on a public prime number pp and a base gg.</p>
 <p>Each party selects a <strong>private secret number</strong>:</p>
 <ul>
-<li>Alice: aa, Bob: bb.<br>
+<li>Alice: a, Bob: b.<br>
 They compute their public keys:</li>
-<li>Alice: A=gamod  pA = g^a \mod p</li>
-<li>Bob: B=gbmod  pB = g^b \mod p<br>
+<li>Alice:A = g^a \mod p</li>
+<li>Bob: B = g^b \mod p<br>
 They exchange public keys and compute the shared secret:</li>
-<li>Alice: S=Bamod  pS = B^a \mod p</li>
-<li>Bob: S=Abmod  pS = A^b \mod p</li>
-<li>Since S=gabmod  pS = g^{ab} \mod p, both parties derive the same key!</li>
+<li>Alice: S = B^a \mod p</li>
+<li>Bob: S = A^b \mod p</li>
+<li>Since S = g^{ab} \mod p, both parties derive the same key!</li>
 </ul>
 <h3 id="pros-2"><strong>Pros:</strong></h3>
 <p>✔ Provides a secure way to exchange encryption keys over an insecure network.<br>
