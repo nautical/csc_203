@@ -636,19 +636,19 @@ pubKey: 02c324648931b89e3e8a0fc42c96e8e3be2e42812986573a40d46563bceaf75110
 <h3 id="how-it-works"><strong>How It Works</strong></h3>
 <p><strong>Key Generation:</strong></p>
 <ul>
-<li>Choose two large prime numbers, pp and qq.</li>
-<li>Compute their product: n=p×qn = p \times q (this forms the modulus).</li>
-<li>Compute ϕ(n)=(p−1)×(q−1)\phi(n) = (p-1) \times (q-1).</li>
-<li>Select a public exponent ee such that 1&lt;e&lt;ϕ(n)1 &lt; e &lt; \phi(n) and ee is co-prime to ϕ(n)\phi(n).</li>
-<li>Compute the private exponent dd, where d≡e−1mod  ϕ(n)d \equiv e^{-1} \mod \phi(n).</li>
+<li>Choose two large prime numbers, p and q.</li>
+<li>Compute their product: n=p×q (this forms the modulus).</li>
+<li>Compute ϕ(n)=(p−1)×(q−1).</li>
+<li>Select a public exponent e such that 1&lt;e&lt;ϕ(n) and e is co-prime to ϕ(n).</li>
+<li>Compute the private exponent d, where d≡e^{−1}  mod  ϕ(n).</li>
 </ul>
 <p><strong>Encryption:</strong></p>
 <ul>
-<li>Ciphertext = C=Memod  nC = M^e \mod n (where MM is the plaintext message).</li>
+<li>Ciphertext = C=M^e mod n (where M is the plaintext message).</li>
 </ul>
 <p><strong>Decryption:</strong></p>
 <ul>
-<li>Plaintext = M=Cdmod  nM = C^d \mod n.</li>
+<li>Plaintext = M = C^d mod n.</li>
 </ul>
 <h3 id="pros"><strong>Pros:</strong></h3>
 <p>✔ Highly secure for sufficiently large keys (2048-bit+ recommended).<br>
