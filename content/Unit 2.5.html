@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><hr>
+<h2 id="quantum-computing-and-cryptographic-vulnerabilities"><strong>Quantum Computing and Cryptographic Vulnerabilities</strong></h2>
+<p>Quantum computing is an emerging technology that threatens traditional cryptographic systems. Unlike classical computers, quantum computers leverage quantum mechanics to solve certain mathematical problems exponentially faster. This has serious implications for cryptography, particularly for public-key encryption systems.</p>
+<hr>
+<h3 id="how-quantum-computers-break-cryptography"><strong>How Quantum Computers Break Cryptography</strong></h3>
+<ol>
+<li>
+<p><strong>Integer Factorization Problem (IFP)</strong>:</p>
+<ul>
+<li>RSA encryption relies on the difficulty of factoring large integers.</li>
+<li>Shor’s Algorithm can factor large numbers efficiently, rendering RSA insecure.</li>
+</ul>
+</li>
+<li>
+<p><strong>Discrete Logarithm Problem (DLP)</strong>:</p>
+<ul>
+<li>Used in Diffie-Hellman Key Exchange (DHKE) and Digital Signature Algorithm (DSA).</li>
+<li>Quantum computers can solve it exponentially faster.</li>
+</ul>
+</li>
+<li>
+<p><strong>Elliptic-Curve Discrete Logarithm Problem (ECDLP)</strong>:</p>
+<ul>
+<li>Affects Elliptic Curve Cryptography (ECC), ECDSA, and ECDH.</li>
+<li>Shor’s Algorithm can efficiently break ECC-based cryptosystems.</li>
+</ul>
+</li>
+<li>
+<p><strong>Shor’s Algorithm</strong>:</p>
+<ul>
+<li>A quantum algorithm that can break RSA, ECC, and similar encryption methods in polynomial time.</li>
+</ul>
+</li>
+<li>
+<p><strong>Symmetric Cryptography and Hash Functions</strong>:</p>
+<ul>
+<li>Mostly resistant to quantum attacks.</li>
+<li>Grover’s Algorithm reduces their security, but increasing key sizes mitigates this.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="quantum-safe-vs.-quantum-broken-algorithms"><strong>Quantum-Safe vs. Quantum-Broken Algorithms</strong></h2>
+<h3 id="quantum-safe-algorithms"><strong>Quantum-Safe Algorithms</strong></h3>
+<ul>
+<li>
+<p><strong>Cryptographic Hash Functions</strong>:</p>
+<ul>
+<li>SHA-2, SHA-3 remain mostly secure.</li>
+<li>Hash-based cryptographic systems like XMSS and SPHINCS+ provide quantum-safe digital signatures.</li>
+</ul>
+</li>
+<li>
+<p><strong>Symmetric Ciphers</strong>:</p>
+<ul>
+<li>AES-256, Twofish-256, ChaCha20 are quantum-safe.</li>
+<li><strong>Grover’s Algorithm</strong> can reduce security, but using larger key sizes compensates for this.</li>
+</ul>
+</li>
+<li>
+<p><strong>Key-Derivation Functions</strong>:</p>
+<ul>
+<li>Argon2, bcrypt, and scrypt are secure.</li>
+</ul>
+</li>
+</ul>
+<h3 id="quantum-broken-algorithms"><strong>Quantum-Broken Algorithms</strong></h3>
+<ul>
+<li>
+<p><strong>Public-Key Cryptosystems</strong>:</p>
+<ul>
+<li>RSA, DSA, ECC, ECDSA, ECDH, ElGamal are broken by quantum computers.</li>
+</ul>
+</li>
+<li>
+<p><strong>Digital Signature Algorithms</strong>:</p>
+<ul>
+<li>ECDSA, EdDSA, and RSA signatures are quantum-vulnerable.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="post-quantum-cryptography-pqc"><strong>Post-Quantum Cryptography (PQC)</strong></h2>
+<p>Since classical public-key cryptography is vulnerable, new algorithms resistant to quantum attacks have been developed.</p>
+<h3 id="lattice-based-cryptography"><strong>Lattice-Based Cryptography</strong></h3>
+<ul>
+<li>
+<p><strong>NTRUEncrypt &amp; NTRUSign</strong>:</p>
+<ul>
+<li>Based on lattice problems, making them quantum-resistant.</li>
+</ul>
+</li>
+<li>
+<p><strong>GLYPH &amp; BLISS</strong>:</p>
+<ul>
+<li>Uses the Ring-LWE problem, which is hard even for quantum computers.</li>
+</ul>
+</li>
+</ul>
+<h3 id="hash-based-cryptography"><strong>Hash-Based Cryptography</strong></h3>
+<ul>
+<li><strong>XMSS (Extended Merkle Signature Scheme)</strong> and <strong>SPHINCS+</strong>:
+<ul>
+<li>Digital signature schemes using hash functions instead of number theory.</li>
+</ul>
+</li>
+</ul>
+<h3 id="code-based-cryptography"><strong>Code-Based Cryptography</strong></h3>
+<ul>
+<li><strong>McEliece Cryptosystem</strong>:
+<ul>
+<li>Based on error-correcting codes, remains secure even against quantum attacks.</li>
+</ul>
+</li>
+</ul>
+<h3 id="multivariate-quadratic-equations-cryptography"><strong>Multivariate-Quadratic Equations Cryptography</strong></h3>
+<ul>
+<li><strong>Rainbow Signature Scheme</strong>:
+<ul>
+<li>Uses complex mathematical equations, resistant to quantum attacks.</li>
+</ul>
+</li>
+</ul>
+<h3 id="zero-knowledge-proof-based-cryptography"><strong>Zero-Knowledge Proof-Based Cryptography</strong></h3>
+<ul>
+<li><strong>PICNIC Signature Scheme</strong>:
+<ul>
+<li>Uses zero-knowledge proofs to ensure security without relying on traditional number-theoretic assumptions.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="quantum-safe-key-exchange"><strong>Quantum-Safe Key Exchange</strong></h2>
+<p>Key exchange protocols must also be quantum-safe:</p>
+<ul>
+<li>
+<p><strong>NewHope</strong>:</p>
+<ul>
+<li>A lattice-based key exchange method used in experimental post-quantum encryption.</li>
+</ul>
+</li>
+<li>
+<p><strong>CECPQ1</strong>:</p>
+<ul>
+<li>A hybrid key exchange combining classical and quantum-safe algorithms, tested by Google.</li>
+</ul>
+</li>
+<li>
+<p><strong>McEliece</strong>:</p>
+<ul>
+<li>Provides secure key exchange using error-correcting codes.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="challenges-in-transitioning-to-pqc"><strong>Challenges in Transitioning to PQC</strong></h2>
+<ol>
+<li>
+<p><strong>Longer Key Sizes</strong>:</p>
+<ul>
+<li>Post-quantum algorithms require significantly larger keys than RSA or ECC.</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance Overhead</strong>:</p>
+<ul>
+<li>More computational power is needed, increasing latency.</li>
+</ul>
+</li>
+<li>
+<p><strong>Standardization &amp; Adoption</strong>:</p>
+<ul>
+<li>NIST is currently evaluating PQC algorithms for future standardization.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="quantum-safe-cryptography-libraries"><strong>Quantum-Safe Cryptography Libraries</strong></h2>
+<p>Several libraries are available for implementing quantum-safe cryptography:</p>
+<ul>
+<li>
+<p><strong>liboqs (Open Quantum Safe)</strong>:</p>
+<ul>
+<li>A research project focused on quantum-resistant cryptography.</li>
+</ul>
+</li>
+<li>
+<p><strong>Bouncy Castle PQC</strong>:</p>
+<ul>
+<li>Provides post-quantum cryptographic implementations.</li>
+</ul>
+</li>
+<li>
+<p><strong>SPHINCS+ Python Library</strong>:</p>
+<ul>
+<li>Hash-based digital signatures.</li>
+</ul>
+</li>
+<li>
+<p><strong>NewHope Key Exchange Implementations</strong>:</p>
+<ul>
+<li>Provides implementations in Python and Go.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>Quantum computing will render traditional cryptographic methods obsolete. However, <strong>lattice-based, hash-based, and code-based cryptography</strong> provide secure alternatives. Organizations must start transitioning to quantum-safe cryptographic methods now to ensure long-term data security.</p>
+<hr>
+<h2 id="lattice-based-cryptography-1"><strong>Lattice-Based Cryptography</strong></h2>
+<p>Lattice-based cryptography is one of the most promising approaches for post-quantum cryptography because it is resistant to quantum attacks, including <strong>Shor’s Algorithm</strong>. It relies on the difficulty of solving lattice problems, which remain computationally hard even for quantum computers.</p>
+<h3 id="what-is-a-lattice"><strong>What is a Lattice?</strong></h3>
+<p>A <strong>lattice</strong> is a grid-like structure in multiple dimensions, formed by integer linear combinations of basis vectors. Formally, for basis vectors <strong>B = {b₁, b₂, …, bₙ}</strong>, the lattice <strong>L(B)</strong> is defined as:</p>
+<p>L(B)={v1b1+v2b2+…+vnbn ∣ vi∈Z}L(B) = { v_1 b_1 + v_2 b_2 + … + v_n b_n \ | \ v_i \in \mathbb{Z} }</p>
+<p>where <strong>v₁, v₂, …, vₙ</strong> are integer coefficients.</p>
+<p>For example, in 2D space, a simple lattice could be a set of points forming a repeating pattern like a chessboard.</p>
+<hr>
+<h3 id="hard-problems-in-lattice-cryptography"><strong>Hard Problems in Lattice Cryptography</strong></h3>
+<p>Several problems related to lattices are computationally difficult, making them useful for cryptography:</p>
+<ol>
+<li>
+<p><strong>Shortest Vector Problem (SVP)</strong>:</p>
+<ul>
+<li>Find the shortest nonzero vector in a lattice.</li>
+<li>Computationally difficult in high dimensions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Closest Vector Problem (CVP)</strong>:</p>
+<ul>
+<li>Given a point <strong>P</strong> (not necessarily in the lattice), find the closest lattice point.</li>
+<li>Used in many cryptographic constructions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Learning With Errors (LWE)</strong>:</p>
+<ul>
+<li>The basis of many lattice-based cryptographic schemes.</li>
+<li>Given a system of linear equations with small random noise added, recover the original values.</li>
+<li>Hard to solve even for quantum computers.</li>
+</ul>
+</li>
+<li>
+<p><strong>Ring-LWE (R-LWE)</strong>:</p>
+<ul>
+<li>A structured version of LWE that allows more efficient cryptographic constructions.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="lattice-based-cryptographic-schemes"><strong>Lattice-Based Cryptographic Schemes</strong></h3>
+<p>Lattice-based cryptography has led to secure encryption and digital signature schemes:</p>
+<ol>
+<li>
+<p><strong>NTRUEncrypt</strong></p>
+<ul>
+<li>A public-key encryption scheme using lattice problems.</li>
+<li>Resistant to quantum attacks.</li>
+</ul>
+</li>
+<li>
+<p><strong>BLISS (Bimodal Lattice Signature Scheme)</strong></p>
+<ul>
+<li>A digital signature scheme based on lattice structures.</li>
+</ul>
+</li>
+<li>
+<p><strong>GLYPH &amp; CRYSTALS-Kyber/Dilithium</strong></p>
+<ul>
+<li>Part of the NIST post-quantum cryptography competition.</li>
+<li>Uses lattice-based assumptions for key exchange and digital signatures.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="shor’s-algorithm"><strong>Shor’s Algorithm</strong></h2>
+<p>Shor’s Algorithm is a <strong>quantum algorithm</strong> that efficiently factors large integers and solves the <strong>Discrete Logarithm Problem</strong>—two fundamental problems underlying classical cryptography.</p>
+<h3 id="why-is-shor’s-algorithm-important"><strong>Why is Shor’s Algorithm Important?</strong></h3>
+<p>Classical cryptographic schemes like RSA, ECC, and DSA rely on the assumption that factoring large numbers or solving discrete logarithms is computationally hard. However, Shor’s Algorithm can <strong>solve these problems in polynomial time</strong>, breaking widely used encryption methods.</p>
+<hr>
+<h3 id="how-shor’s-algorithm-works"><strong>How Shor’s Algorithm Works</strong></h3>
+<p>Shor’s Algorithm uses quantum computing principles, including <strong>quantum superposition</strong> and <strong>quantum Fourier transforms</strong>, to efficiently find the factors of a number.</p>
+<ol>
+<li>
+<p><strong>Step 1: Choose a Random Number a</strong></p>
+<ul>
+<li>Given an integer N (the number to be factored), choose a random a such that 1&lt;a&lt;N.</li>
+</ul>
+</li>
+<li>
+<p><strong>Step 2: Compute GCD</strong></p>
+<ul>
+<li>Compute gcd⁡(a,N). If gcd⁡(a,N)≠1, then you already found a factor.</li>
+</ul>
+</li>
+<li>
+<p><strong>Step 3: Find the Period r of the Function f(x)=ax mod  N</strong></p>
+<ul>
+<li>The goal is to find the smallest r such that: a^r ≡ 1  (mod N)</li>
+<li>This step is performed using the <strong>Quantum Fourier Transform (QFT)</strong>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Step 4: Compute the Factors</strong></p>
+<ul>
+<li>If r is even, compute: gcd( pow(a,r/2) − 1 , N) and  gcd (pow(a,r/2) + 1 , N )</li>
+<li>At least one of these will yield a <strong>nontrivial factor of N</strong>.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="implications-of-shor’s-algorithm"><strong>Implications of Shor’s Algorithm</strong></h3>
+<ul>
+<li><strong>RSA encryption is broken</strong> because it relies on the hardness of factoring large numbers.</li>
+<li><strong>ECC is broken</strong> since it depends on solving discrete logarithms.</li>
+<li><strong>DHKE (Diffie-Hellman Key Exchange) is broken</strong>, as it relies on the same mathematical assumptions.</li>
+</ul>
+<hr>
+<h2 id="why-lattice-cryptography-is-safe-from-shor’s-algorithm"><strong>Why Lattice Cryptography is Safe from Shor’s Algorithm</strong></h2>
+<p>Unlike RSA and ECC, lattice-based cryptography is built on <strong>problems that do not have known efficient quantum solutions</strong>. Since <strong>Shor’s Algorithm cannot efficiently solve lattice problems</strong>, these cryptographic schemes remain secure in a quantum world.</p>
+<hr>
+<h3 id="conclusion-1"><strong>Conclusion</strong></h3>
+<ul>
+<li><strong>Shor’s Algorithm</strong> is a quantum algorithm that breaks classical public-key cryptography.</li>
+<li><strong>Lattice-Based Cryptography</strong> provides a strong alternative that is resistant to quantum attacks.</li>
+<li>As quantum computers advance, transitioning to lattice-based cryptographic methods is essential for security.</li>
+</ul>
+</div>
+</body>
+
+</html>

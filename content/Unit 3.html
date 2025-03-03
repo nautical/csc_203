@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 1</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h2 id="section-1-atomic-broadcast"><strong>Section 1: Atomic Broadcast</strong></h2>
+<h4 id="slide-1-introduction-to-atomic-broadcast"><strong>Slide 1: Introduction to Atomic Broadcast</strong></h4>
+<ul>
+<li><strong>Definition:</strong> Atomic Broadcast ensures that all correct processes in a distributed system deliver the same messages in the same order.</li>
+<li><strong>Use Case:</strong> Distributed systems, blockchain, fault-tolerant computing.</li>
+</ul>
+<h4 id="slide-2-properties-of-atomic-broadcast"><strong>Slide 2: Properties of Atomic Broadcast</strong></h4>
+<ol>
+<li><strong>Agreement:</strong> All correct nodes deliver the same messages in the same order.</li>
+<li><strong>Validity:</strong> Messages sent by a correct process are eventually delivered.</li>
+<li><strong>Integrity:</strong> No duplicated or altered messages.</li>
+<li><strong>Total Order:</strong> Messages are delivered in the same order to all correct processes.</li>
+</ol>
+<h4 id="slide-3-atomic-broadcast-vs.-reliable-broadcast"><strong>Slide 3: Atomic Broadcast vs. Reliable Broadcast</strong></h4>
+<p>Feature | Atomic Broadcast | Reliable Broadcast</p>
+<p>Ordering | Total Order | No Order Guarantees</p>
+<p>Use Case | Consensus, Blockchain | General Messaging</p>
+<p>Agreement | Strong | Weaker</p>
+<blockquote>
+<p>Atomic broadcast ensures that all correct nodes deliver the same messages in the same order, critical for achieving consensus.</p>
+</blockquote>
+<hr>
+<h2 id="section-2-consensus-in-distributed-systems"><strong>Section 2: Consensus in Distributed Systems</strong></h2>
+<h4 id="slide-4-what-is-consensus"><strong>Slide 4: What is Consensus?</strong></h4>
+<ul>
+<li><strong>Definition:</strong> Agreement among distributed nodes on a single data value.</li>
+<li><strong>Importance:</strong> Prevents inconsistencies, ensures fault tolerance. It ensures all nodes agree on the same transaction history, preventing double-spending and inconsistencies.</li>
+</ul>
+<h4 id="slide-5-consensus-algorithms"><strong>Slide 5: Consensus Algorithms</strong></h4>
+<ul>
+<li><strong>Paxos:</strong> Leader-based consensus, used in databases.</li>
+<li><strong>Raft:</strong> Simplified Paxos with leader election.</li>
+<li><strong>PBFT:</strong> Byzantine Fault-Tolerant (BFT) consensus, resilient against malicious nodes.</li>
+</ul>
+<h4 id="pbft"><strong>PBFT</strong></h4>
+<ul>
+<li><strong>PBFT Overview:</strong> Leader node proposes, other nodes validate.</li>
+<li><strong>Phases:</strong> Pre-Prepare → Prepare → Commit → Reply.</li>
+<li><strong>Performance:</strong> Fast for small networks, but O(n²) complexity limits scalability.</li>
+<li><strong>Limitations:</strong> High communication overhead, requires &gt;⅔ honest nodes.</li>
+</ul>
+<hr>
+<h2 id="section-3-collision-resistant-hash-functions"><strong>Section 3: Collision-Resistant Hash Functions</strong></h2>
+<h4 id="slide-6-what-is-a-hash-function"><strong>Slide 6: What is a Hash Function?</strong></h4>
+<ul>
+<li><strong>Definition:</strong> A mathematical function mapping input data to a fixed-size hash value.</li>
+<li><strong>Use Cases:</strong> Cryptography, blockchain, data integrity verification.</li>
+</ul>
+<h4 id="slide-7-collision-resistance"><strong>Slide 7: Collision Resistance</strong></h4>
+<ul>
+<li><strong>Definition:</strong> It should be infeasible to find two different inputs that produce the same hash.</li>
+<li><strong>Example:</strong> SHA-256, SHA-3.</li>
+<li><strong>Why It Matters?</strong> Prevents attacks like pre-image and birthday attacks.</li>
+</ul>
+<blockquote>
+<p>It ensures data integrity by preventing two different inputs from producing the same hash, avoiding fraud and tampering.</p>
+</blockquote>
+<hr>
+<h2 id="designing-a-collision-resistant-hash-function">Designing a collision-resistant hash function</h2>
+<p>Here’s a simple <strong>collision-resistant hash function</strong> based on the <strong>Cipher Block Chaining (CBC) mode</strong> of a block cipher like AES.</p>
+<hr>
+<h3 id="slide-8--design-cbc-based-hash-function"><strong>Slide 8:  Design: CBC-Based Hash Function</strong></h3>
+<h4 id="initialization"><strong>1. Initialization</strong></h4>
+<ul>
+<li>Define a fixed <strong>initialization vector (IV)</strong> of size <code>n</code> bits (e.g., 256 bits for AES-256).</li>
+<li>The message is <strong>split into L blocks</strong>, each of size <code>b</code> bits (e.g., 128 bits for AES).</li>
+<li>The final block includes <strong>padding</strong> (PKCS7 or 0x80 padding) and the <strong>message length</strong> to prevent length extension attacks.</li>
+</ul>
+<h4 id="iterative-hashing-using-cbc-mode"><strong>2. Iterative Hashing Using CBC Mode</strong></h4>
+<p>For each block <code>Pj</code> of the message:</p>
+<ol>
+<li>XOR the previous <strong>ciphertext block</strong> (or IV for the first block) with the <strong>current plaintext block</strong></li>
+<li>Encrypt the result using a fixed <strong>secret key K</strong> with AES</li>
+<li>The output becomes the new <strong>chaining variable</strong> for the next block.</li>
+</ol>
+<h4 id="finalization"><strong>3. Finalization</strong></h4>
+<ul>
+<li>After processing all message blocks, <strong>encrypt the final state one more time</strong> with AES</li>
+<li>The final value is the <strong>hash output</strong>.</li>
+</ul>
+<hr>
+<h3 id="why-is-it-collision-resistant"><strong>Why is it Collision-Resistant?</strong></h3>
+<ol>
+<li><strong>Avalanche Effect</strong>:
+<ul>
+<li>Small input changes lead to unpredictable output due to AES’s diffusion properties.</li>
+</ul>
+</li>
+<li><strong>Chaining with CBC</strong>:
+<ul>
+<li>Each block depends on all previous blocks, making it difficult to manipulate individual parts.</li>
+</ul>
+</li>
+<li><strong>Fixed-Length Inclusion</strong>:
+<ul>
+<li>Prevents length-extension attacks by ensuring the final block contains message length.</li>
+</ul>
+</li>
+<li><strong>AES Security</strong>:
+<ul>
+<li>AES is computationally infeasible to reverse or find collisions.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="key-takeaways"><strong>Key Takeaways</strong></h3>
+<ul>
+<li>Uses <strong>AES in CBC mode</strong> as the core primitive.</li>
+<li>Strong <strong>collision and pre-image resistance</strong> due to block chaining.</li>
+<li>Ensures <strong>message integrity</strong> with padding and length inclusion.</li>
+<li>Computationally <strong>efficient</strong> and easy to implement using standard cryptographic libraries.</li>
+</ul>
+<hr>
+<h2 id="section-4-verifiable-random-functions-vrfs"><strong>Section 4: Verifiable Random Functions (VRFs)</strong></h2>
+<h4 id="slide-9-what-is-a-vrf"><strong>Slide 9: What is a VRF?</strong></h4>
+<ul>
+<li><strong>Definition:</strong> A function that generates a pseudorandom output along with a proof that the output is correct.</li>
+<li><strong>Use Cases:</strong> Blockchain randomness, cryptographic elections.</li>
+</ul>
+<h4 id="slide-10-vrf-vs.-prf"><strong>Slide 10: VRF vs. PRF</strong></h4>
+<p>Feature | VRF | PRF</p>
+<p>Output Verifiability | Yes | No</p>
+<p>Use Case | Cryptographic randomness |Secure key derivation</p>
+<blockquote>
+<p>A VRF provides a proof of correctness for its output, whereas a PRF does not.</p>
+</blockquote>
+<hr>
+<h4 id="concepts"><strong>Concepts</strong></h4>
+<p><strong>Raft consensus algorithm</strong><br>
+-   <strong>Raft:</strong> Leader election, log replication, consensus enforcement.<br>
+-   <strong>Advantages:</strong> Simpler than Paxos, easier to implement.<br>
+-   <strong>Disadvantages:</strong> Single leader bottleneck, not BFT.</p>
+<p><strong>Commit Reveal</strong><br>
+-   <strong>Commit Phase:</strong> Hash(value + nonce).<br>
+-   <strong>Reveal Phase:</strong> Provide value + nonce, verifier hashes and checks.<br>
+-   <strong>Primitives:</strong> SHA-256 for hashing, nonces for uniqueness.</p>
+<p><strong>ZK Proofs</strong></p>
+<ul>
+<li>A proof that allows one party to prove knowledge of a secret without revealing it. Used in privacy-preserving transactions like Zcash.</li>
+</ul>
+<p><strong>Sybil</strong></p>
+<ul>
+<li>A mechanism to prevent attackers from creating multiple identities to manipulate consensus (e.g., Proof-of-Work in Bitcoin).</li>
+</ul>
+<hr>
+<h1 id="in-depth-explanation-of-raft-consensus-and-sha-secure-hash-algorithm"><strong>In-Depth Explanation of Raft Consensus and SHA (Secure Hash Algorithm)</strong></h1>
+<hr>
+<h2 id="raft-consensus-algorithm"><strong>1. Raft Consensus Algorithm</strong></h2>
+<h3 id="introduction"><strong>Introduction</strong></h3>
+<p>Raft is a consensus algorithm designed to be <strong>understandable and practical</strong>, offering a simpler alternative to Paxos. It ensures that a distributed system of nodes agrees on a single sequence of <strong>log entries</strong>, even in the presence of node failures.</p>
+<hr>
+<h3 id="how-raft-works"><strong>How Raft Works</strong></h3>
+<p>Raft divides the <strong>consensus process</strong> into three roles:</p>
+<ol>
+<li><strong>Leader</strong> – Coordinates the system and replicates logs.</li>
+<li><strong>Followers</strong> – Passive participants that accept log entries.</li>
+<li><strong>Candidates</strong> – Nodes that can become leaders if the current leader fails.</li>
+</ol>
+<h3 id="key-phases-of-raft"><strong>Key Phases of Raft</strong></h3>
+<h4 id="leader-election"><strong>1. Leader Election</strong></h4>
+<ul>
+<li>The system starts with no leader.</li>
+<li>If a follower does not receive communication from a leader within a <strong>timeout period</strong>, it transitions to <strong>candidate</strong> state.</li>
+<li>The candidate starts an <strong>election</strong> by sending <strong>RequestVote RPCs</strong> to other nodes.</li>
+<li>If the candidate gets a majority of votes, it becomes the new <strong>leader</strong>.</li>
+<li>The leader then begins <strong>sending heartbeat messages</strong> to prevent new elections.</li>
+</ul>
+<h4 id="log-replication"><strong>2. Log Replication</strong></h4>
+<ul>
+<li>The leader accepts client requests and adds them to its log.</li>
+<li>It then <strong>sends AppendEntries RPCs</strong> to followers, ensuring they copy the new log entries.</li>
+<li>Once a majority of followers acknowledge a log entry, it is <strong>committed</strong> and applied to the state machine.</li>
+</ul>
+<h4 id="safety-mechanism"><strong>3. Safety Mechanism</strong></h4>
+<ul>
+<li><strong>Raft ensures log consistency</strong>: If a candidate’s log is <strong>less up-to-date</strong> than another node’s log, it cannot become a leader.</li>
+<li><strong>Commitment guarantee</strong>: A log entry is <strong>committed</strong> only when the leader replicates it on a majority of nodes.</li>
+<li><strong>Fault tolerance</strong>: Raft can tolerate <strong>f = (N-1)/2</strong> failures in an <strong>N-node</strong> system.</li>
+</ul>
+<hr>
+<h3 id="illustration-of-raft-process"><strong>Illustration of Raft Process</strong></h3>
+<ol>
+<li><strong>Leader Election:</strong> If no leader exists, an election starts.</li>
+<li><strong>Log Replication:</strong> The leader ensures logs are replicated consistently.</li>
+<li><strong>Commitment:</strong> A log entry is committed only after replication to a majority of nodes.</li>
+</ol>
+<h3 id="raft-leader-election-example-in-python"><strong>Raft Leader Election Example in Python</strong></h3>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">import</span> time
+<span class="token keyword">import</span> random
+
+<span class="token keyword">class</span> <span class="token class-name">RaftNode</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> node_id<span class="token punctuation">,</span> cluster_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>node_id <span class="token operator">=</span> node_id
+        self<span class="token punctuation">.</span>cluster_size <span class="token operator">=</span> cluster_size
+        self<span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token string">"follower"</span>
+        self<span class="token punctuation">.</span>term <span class="token operator">=</span> <span class="token number">0</span>
+        self<span class="token punctuation">.</span>votes <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token keyword">def</span> <span class="token function">start_election</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token string">"candidate"</span>
+        self<span class="token punctuation">.</span>term <span class="token operator">+=</span> <span class="token number">1</span>
+        self<span class="token punctuation">.</span>votes <span class="token operator">=</span> <span class="token number">1</span>  <span class="token comment"># Vote for itself</span>
+        votes_needed <span class="token operator">=</span> self<span class="token punctuation">.</span>cluster_size <span class="token operator">//</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"Node {self.node_id} starts election for term {self.term}"</span><span class="token punctuation">)</span>
+
+        <span class="token comment"># Simulating votes from other nodes</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>cluster_size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> random<span class="token punctuation">.</span>random<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0.5</span><span class="token punctuation">:</span>  <span class="token comment"># Randomly grant votes</span>
+                self<span class="token punctuation">.</span>votes <span class="token operator">+=</span> <span class="token number">1</span>
+            <span class="token keyword">if</span> self<span class="token punctuation">.</span>votes <span class="token operator">&gt;=</span> votes_needed<span class="token punctuation">:</span>
+                self<span class="token punctuation">.</span>state <span class="token operator">=</span> <span class="token string">"leader"</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"Node {self.node_id} becomes leader for term {self.term}"</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span>
+
+        <span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"Node {self.node_id} failed election in term {self.term}"</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Example Usage</span>
+node <span class="token operator">=</span> RaftNode<span class="token punctuation">(</span>node_id<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> cluster_size<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">)</span>
+node<span class="token punctuation">.</span>start_election<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+</code></pre>
+<h3 id="advantages-of-raft"><strong>Advantages of Raft</strong></h3>
+<ol>
+<li><strong>Simple to Understand</strong> – Easier than Paxos, making it widely adopted.</li>
+<li><strong>Efficient Log Replication</strong> – Only needs a majority vote for commitment.</li>
+<li><strong>Leader-Centric</strong> – Reduces unnecessary communication.</li>
+</ol>
+<h3 id="limitations-of-raft"><strong>Limitations of Raft</strong></h3>
+<ol>
+<li><strong>Single Leader Bottleneck</strong> – The leader handles all client requests.</li>
+<li><strong>Not Byzantine Fault Tolerant</strong> – Raft assumes honest nodes.</li>
+<li><strong>Leader Election Overhead</strong> – Frequent leader changes can slow down the system.</li>
+</ol>
+<hr>
+<h2 id="secure-hash-algorithm-sha"><strong>2. Secure Hash Algorithm (SHA)</strong></h2>
+<h3 id="what-is-a-hash-function"><strong>What is a Hash Function?</strong></h3>
+<p>A <strong>cryptographic hash function</strong> is a mathematical algorithm that transforms input data into a <strong>fixed-size</strong> output.</p>
+<h3 id="properties-of-a-secure-hash-algorithm"><strong>Properties of a Secure Hash Algorithm</strong></h3>
+<ol>
+<li><strong>Deterministic</strong> – The same input always produces the same output.</li>
+<li><strong>Pre-image Resistance</strong> – Given a hash, it’s hard to reverse-engineer the original input.</li>
+<li><strong>Second Pre-image Resistance</strong> – Hard to find two different inputs with the same hash.</li>
+<li><strong>Collision Resistance</strong> – Infeasible to find two distinct inputs that generate the same hash.</li>
+</ol>
+<hr>
+<h3 id="how-sha-works"><strong>How SHA Works</strong></h3>
+<p>SHA-256 (used in Bitcoin) operates in the following steps:</p>
+<ol>
+<li><strong>Padding</strong> – The message is <strong>padded</strong> to ensure its length is a multiple of 512 bits.</li>
+<li><strong>Message Processing</strong> – The message is split into <strong>512-bit chunks</strong>.</li>
+<li><strong>Compression Function</strong> – Each chunk undergoes multiple rounds of bitwise operations and modular addition.</li>
+<li><strong>Final Hash Output</strong> – The final 256-bit hash is generated.</li>
+</ol>
+<hr>
+<h3 id="sha-256-workflow"><strong>SHA-256 Workflow</strong></h3>
+<ol>
+<li><strong>Initialize hash values (H0 to H7)</strong></li>
+<li><strong>Process 512-bit message blocks using a series of logical functions</strong></li>
+<li><strong>Update hash values through 64 iterations</strong></li>
+<li><strong>Produce the final 256-bit hash</strong></li>
+</ol>
+<h3 id="sha-256-example-in-python"><strong>SHA-256 Example in Python</strong></h3>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">import</span> hashlib
+
+<span class="token keyword">def</span> <span class="token function">sha256_hash</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> hashlib<span class="token punctuation">.</span>sha256<span class="token punctuation">(</span>data<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+message <span class="token operator">=</span> <span class="token string">"Blockchain Security"</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"SHA-256 Hash: {sha256_hash(message)}"</span><span class="token punctuation">)</span>
+
+</code></pre>
+<h3 id="example-hash-output"><strong>Example Hash Output</strong></h3>
+<pre><code>SHA-256 Hash: 5b2ca927a2f81bde351b36e84e2300d09efba2f315dcffad535b60c227e68dfd
+
+</code></pre>
+<hr>
+<h3 id="security-analysis-of-sha-256"><strong>Security Analysis of SHA-256</strong></h3>
+<ol>
+<li>
+<p><strong>Pre-image Resistance:</strong></p>
+<ul>
+<li>If given <strong>H(X) = 5b2ca9…</strong>, it is infeasible to find <strong>X</strong>.</li>
+<li>A brute-force attack would require <strong>2^256</strong> operations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Collision Resistance:</strong></p>
+<ul>
+<li>No two different inputs should produce the same hash.</li>
+</ul>
+</li>
+<li>
+<p><strong>Avalanche Effect:</strong></p>
+<ul>
+<li>A small change in input results in a drastically different output.</li>
+</ul>
+</li>
+</ol>
+<h3 id="comparison-of-sha-variants"><strong>Comparison of SHA Variants</strong></h3>
+<p>Algorithm | Output Size | Security Level | Use Case</p>
+<p>SHA-1 |160-bit | Broken | Legacy Systems</p>
+<p>SHA-256 | 256-bit | Secure |Bitcoin, TLS</p>
+<p>SHA-3-512 | 512-bit | Highly Secure |Post-Quantum Crypto</p>
+<hr>
+<h3 id="sha-3-vs.-sha-256"><strong>SHA-3 vs. SHA-256</strong></h3>
+<p>SHA-3 introduces a <strong>sponge construction</strong>, which is more resistant to length-extension attacks compared to SHA-256’s <strong>Merkle-Damgård</strong> construction.</p>
+<h3 id="sha-3-512-implementation-in-python"><strong>SHA-3-512 Implementation in Python</strong></h3>
+<pre class=" language-python"><code class="prism  language-python"><span class="token keyword">def</span> <span class="token function">sha3_512_hash</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> hashlib<span class="token punctuation">.</span>sha3_512<span class="token punctuation">(</span>data<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>hexdigest<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>f<span class="token string">"SHA-3-512 Hash: {sha3_512_hash('Blockchain Security')}"</span><span class="token punctuation">)</span>
+
+</code></pre>
+<hr>
+<h2 id="summary"><strong>Summary</strong></h2>
+<ul>
+<li><strong>Raft Consensus</strong> ensures reliable agreement in distributed systems through <strong>leader elections and log replication</strong>.</li>
+<li><strong>SHA-256</strong> is a widely used cryptographic hash function that provides <strong>collision resistance and data integrity</strong>.</li>
+<li><strong>SHA-3</strong> improves upon SHA-256 with <strong>better resistance to cryptanalytic attacks</strong>.</li>
+</ul>
+<p>These concepts form the foundation of secure and decentralized <strong>blockchain</strong> and <strong>distributed systems</strong>. Let me know if you need further explanations or refinements!</p>
+</div>
+</body>
+
+</html>
