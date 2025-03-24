@@ -1,0 +1,627 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><hr>
+<h1 id="bitcoin-scripting-language">Bitcoin Scripting Language</h1>
+<hr>
+<h2 id="slide-1-introduction-to-bitcoin-script">Slide 1: Introduction to Bitcoin Script</h2>
+<ul>
+<li>
+<p><strong>What is Bitcoin Script?</strong><br>
+Bitcoin Script is a simple, low-level, stack-based language used to specify the conditions for spending bitcoins. It ensures that funds can only be spent if certain criteria are met, adding a layer of security and customizability to transactions.</p>
+<p>https://github.com/bitcoin/bitcoin/blob/v0.14.0/src/script/script.h#L46L187</p>
+</li>
+<li>
+<p><strong>Key Characteristics:</strong></p>
+<ul>
+<li><strong>Non-Turing Complete:</strong> Designed to prevent loops and ensure termination.</li>
+<li><strong>Stack-Based Execution:</strong> Uses a last-in, first-out (LIFO) model to process instructions.</li>
+<li><strong>Declarative Nature:</strong> Specifies conditions without conventional flow-control structures.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="what-are-stack-based-languages">** What Are Stack-Based Languages?</h2>
+<p>Stack-based languages rely on a <strong>stack</strong> data structure—a last-in, first-out (LIFO) storage system—to manage data and control the flow of execution. In these languages, most operations involve pushing values onto the stack, manipulating those values with various operations, and then popping values off to produce a result.</p>
+<h3 id="key-characteristics">Key Characteristics</h3>
+<ul>
+<li>
+<p><strong>Simplicity:</strong><br>
+Operations are executed using a simple, consistent mechanism (i.e., the stack), making the language concise and predictable.</p>
+</li>
+<li>
+<p><strong>No Variables (Typically):</strong><br>
+Instead of named variables, values are manipulated directly on the stack. This minimizes the need for complex memory management.</p>
+</li>
+<li>
+<p><strong>Deterministic Execution:</strong><br>
+Because operations are applied in a strict LIFO order, the execution is usually straightforward to understand and reason about.</p>
+</li>
+</ul>
+<hr>
+<h2 id="simple-non-bitcoin-examples">Simple Non-Bitcoin Examples</h2>
+<h3 id="reverse-polish-notation-rpn-calculators">1. Reverse Polish Notation (RPN) Calculators</h3>
+<p>RPN calculators are a classic example of a stack-based system. Instead of writing expressions in the typical infix notation (e.g., 3 + 4), you write them in postfix (e.g., 3 4 +).</p>
+<p><strong>Example:</strong></p>
+<p>To evaluate the expression 3 + 4:</p>
+<ul>
+<li><strong>Step 1:</strong> Push 3 onto the stack.</li>
+<li><strong>Step 2:</strong> Push 4 onto the stack.</li>
+<li><strong>Step 3:</strong> Apply the <code>+</code> operation which pops 4 and 3, adds them, and then pushes the result (7) back onto the stack.</li>
+</ul>
+<p><strong>Visualizing the Stack:</strong></p>
+<ol>
+<li>Initial Stack: <code>[]</code></li>
+<li>After pushing 3: <code>[3]</code></li>
+<li>After pushing 4: <code>[3, 4]</code></li>
+<li>After executing <code>+</code>: <code>[7]</code></li>
+</ol>
+<h3 id="the-forth-programming-language">2. The Forth Programming Language</h3>
+<p>Forth is an interactive, stack-based language used in embedded systems and control applications. It uses words (commands) that operate directly on a data stack.</p>
+<p><strong>Example:</strong></p>
+<p>Consider the Forth snippet:</p>
+<pre><code>3 4 + .
+
+</code></pre>
+<ul>
+<li><strong>3:</strong> Pushes the number 3.</li>
+<li><strong>4:</strong> Pushes the number 4.</li>
+<li><strong>+:</strong> Pops the top two numbers (3 and 4), adds them to get 7, and pushes 7 onto the stack.</li>
+<li><strong>. (dot):</strong> Pops and prints the top value of the stack (7).</li>
+</ul>
+<p>This concise syntax allows for very direct and efficient computation without the need for complex syntax.</p>
+<h3 id="postscript-simplified-use-case">3. PostScript (Simplified Use Case)</h3>
+<p>PostScript is primarily used for describing page layouts and graphics. It’s a stack-based language where drawing commands operate on a stack of parameters.</p>
+<p><strong>Example:</strong></p>
+<p>To draw a simple line, a PostScript snippet might look like:</p>
+<pre><code>100 200 moveto
+300 400 lineto
+stroke
+
+</code></pre>
+<ul>
+<li><strong>100 200 moveto:</strong> Pushes 100 and 200 onto the stack and moves the “pen” to that point.</li>
+<li><strong>300 400 lineto:</strong> Pushes 300 and 400 onto the stack and draws a line from the current point to the new point.</li>
+<li><strong>stroke:</strong> Renders the line on the page.</li>
+</ul>
+<p>Even though PostScript is more specialized, its stack-based approach makes it clear how each command directly manipulates the drawing context.</p>
+<hr>
+<h2 id="slide-2-fundamental-script-components">Slide 2: Fundamental Script Components</h2>
+<ul>
+<li>
+<p><strong>Script Structure:</strong><br>
+Every Bitcoin transaction uses two scripts:</p>
+<ul>
+<li><strong>ScriptPubKey (Locking Script):</strong> Attached to outputs, it defines the conditions required to spend the funds.</li>
+<li><strong>ScriptSig (Unlocking Script):</strong> Provided in the spending transaction, it supplies data to satisfy the conditions set by the ScriptPubKey.</li>
+</ul>
+</li>
+<li>
+<p><strong>How Scripts Work:</strong><br>
+The scripts run sequentially. The unlocking script is executed first, pushing data onto the stack, and then the locking script is executed, which consumes that data to validate the transaction.</p>
+</li>
+</ul>
+<hr>
+<h2 id="slide-3-script-example-–-pay-to-public-key-hash-p2pkh">Slide 3: Script Example – Pay-to-Public-Key-Hash (P2PKH)</h2>
+<h3 id="p2pkh-locking-script-scriptpubkey">P2PKH Locking Script (ScriptPubKey)</h3>
+<pre><code>OP_DUP OP_HASH160 &lt;PubKeyHash&gt; OP_EQUALVERIFY OP_CHECKSIG
+
+</code></pre>
+<ul>
+<li><strong>Explanation:</strong>
+<ul>
+<li><strong>OP_DUP:</strong> Duplicates the top item on the stack (the public key provided in ScriptSig).</li>
+<li><strong>OP_HASH160:</strong> Hashes the public key using SHA-256 followed by RIPEMD-160.</li>
+<li><strong>:</strong> The expected hash of the public key.</li>
+<li><strong>OP_EQUALVERIFY:</strong> Compares the hashed public key with the provided hash; the script stops if they do not match.</li>
+<li><strong>OP_CHECKSIG:</strong> Verifies the signature against the public key.</li>
+</ul>
+</li>
+</ul>
+<h3 id="p2pkh-unlocking-script-scriptsig">P2PKH Unlocking Script (ScriptSig)</h3>
+<pre><code>&lt;Signature&gt; &lt;PublicKey&gt;
+
+</code></pre>
+<ul>
+<li><strong>Explanation:</strong><br>
+The ScriptSig supplies the signature and the public key, which—when processed with the ScriptPubKey—prove ownership of the funds.</li>
+</ul>
+<hr>
+<h2 id="slide-4-script-example-–-pay-to-script-hash-p2sh">Slide 4: Script Example – Pay-to-Script-Hash (P2SH)</h2>
+<h3 id="p2sh-locking-script-scriptpubkey">P2SH Locking Script (ScriptPubKey)</h3>
+<pre><code>OP_HASH160 &lt;ScriptHash&gt; OP_EQUAL
+
+</code></pre>
+<ul>
+<li><strong>Explanation:</strong>
+<ul>
+<li><strong>OP_HASH160:</strong> Hashes the provided redeem script.</li>
+<li><strong>:</strong> The hash of the redeem script that was set when the output was created.</li>
+<li><strong>OP_EQUAL:</strong> Checks if the hash of the provided redeem script matches the expected hash.</li>
+</ul>
+</li>
+</ul>
+<h3 id="p2sh-unlocking-script-scriptsig">P2SH Unlocking Script (ScriptSig)</h3>
+<pre><code>&lt;Signature(s)&gt; &lt;RedeemScript&gt;
+
+</code></pre>
+<ul>
+<li><strong>Explanation:</strong><br>
+The unlocking script must provide a redeem script that, when hashed, equals <code>&lt;ScriptHash&gt;</code>, along with the necessary signatures or other data required by that redeem script.</li>
+</ul>
+<hr>
+<h2 id="slide-5-script-example-–-multisignature-transactions">Slide 5: Script Example – Multisignature Transactions</h2>
+<h3 id="multisignature-script-often-used-with-p2sh">Multisignature Script (often used with P2SH)</h3>
+<h4 id="redeem-script-inside-the-scriptsig-for-p2sh-multisig">Redeem Script (inside the ScriptSig for P2SH multisig)</h4>
+<pre><code>&lt;OP_M&gt; &lt;PubKey1&gt; &lt;PubKey2&gt; ... &lt;PubKeyN&gt; &lt;OP_N&gt; OP_CHECKMULTISIG
+
+</code></pre>
+<ul>
+<li><strong>Explanation:</strong>
+<ul>
+<li><strong>OP_M:</strong> Indicates the minimum number of signatures required (e.g., OP_2 for 2-of-3 multisig).</li>
+<li><strong>… :</strong> List of public keys authorized to sign the transaction.</li>
+<li><strong>OP_N:</strong> Total number of provided public keys.</li>
+<li><strong>OP_CHECKMULTISIG:</strong> Validates that at least <code>&lt;OP_M&gt;</code> signatures are correct.</li>
+</ul>
+</li>
+</ul>
+<h4 id="unlocking-script-scriptsig-for-multisig">Unlocking Script (ScriptSig for Multisig)</h4>
+<pre><code>OP_0 &lt;Signature1&gt; &lt;Signature2&gt; ... &lt;SignatureM&gt; &lt;RedeemScript&gt;
+
+</code></pre>
+<ul>
+<li><strong>Explanation:</strong>
+<ul>
+<li><strong>OP_0:</strong> Due to an off-by-one error in the original implementation, a dummy value (often OP_0) is required at the beginning.</li>
+<li><strong>… :</strong> The signatures that satisfy the redeem script.</li>
+<li><strong>:</strong> The complete redeem script that defines the multisignature requirements.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="slide-6-script-example-–-op_return-and-data-carrying-scripts">Slide 6: Script Example – OP_RETURN and Data-Carrying Scripts</h2>
+<h3 id="op_return-script">OP_RETURN Script</h3>
+<pre><code>OP_RETURN &lt;data&gt;
+
+</code></pre>
+<ul>
+<li><strong>Explanation:</strong>
+<ul>
+<li><strong>OP_RETURN:</strong> Marks the output as provably unspendable, effectively “burning” the output.</li>
+<li><strong>:</strong> Arbitrary data that can be stored in the blockchain, often used for embedding metadata or messages.</li>
+</ul>
+</li>
+<li><strong>Usage:</strong><br>
+OP_RETURN scripts are useful for applications that want to store data on the blockchain without risking the accidental spending of funds.</li>
+</ul>
+<hr>
+<h2 id="slide-7-in-depth-look-at-script-formats">Slide 7: In-Depth Look at Script Formats</h2>
+<h3 id="common-script-formats-explained">Common Script Formats Explained</h3>
+<ul>
+<li><strong>P2PKH (Pay-to-Public-Key-Hash):</strong>
+<ul>
+<li>Most widely used format.</li>
+<li>Simplicity and security come from requiring a matching signature and public key.</li>
+</ul>
+</li>
+<li><strong>P2SH (Pay-to-Script-Hash):</strong>
+<ul>
+<li>Allows complex scripts to be encapsulated as a single hash.</li>
+<li>The redeem script is only revealed when spending the output, enhancing privacy and flexibility.</li>
+</ul>
+</li>
+<li><strong>Multisignature Scripts:</strong>
+<ul>
+<li>A subtype of P2SH.</li>
+<li>Enhances security by requiring multiple parties to authorize a transaction.</li>
+</ul>
+</li>
+<li><strong>OP_RETURN Scripts:</strong>
+<ul>
+<li>Not meant for spending funds.</li>
+<li>Used primarily for data embedding and signaling purposes on the blockchain.</li>
+</ul>
+</li>
+</ul>
+<h3 id="security-and-efficiency-considerations">Security and Efficiency Considerations</h3>
+<ul>
+<li>
+<p><strong>Deterministic Execution:</strong><br>
+All script types are designed to run quickly and deterministically, ensuring the network can validate transactions without running into resource exhaustion issues.</p>
+</li>
+<li>
+<p><strong>Limiting Complexity:</strong><br>
+The non-Turing complete nature prevents loops, keeping scripts predictable and reducing potential attack vectors.</p>
+</li>
+</ul>
+<hr>
+<h2 id="slide-8-conclusion">Slide 8: Conclusion</h2>
+<ul>
+<li>
+<p><strong>Summary:</strong><br>
+Bitcoin Script is a versatile, secure language that underpins Bitcoin’s transaction verification. Its various script formats—from simple P2PKH to more complex multisignature and P2SH—demonstrate the adaptability of Bitcoin’s protocol while maintaining a strong emphasis on security.</p>
+</li>
+<li>
+<p><strong>Final Thoughts:</strong><br>
+While Bitcoin Script’s limited functionality is by design (to preserve security and efficiency), it still offers enough flexibility to support a range of transaction types and innovative applications, such as data storage with OP_RETURN.</p>
+</li>
+<li>
+<p><strong>Further Exploration:</strong></p>
+<ul>
+<li>Visit the <a href="https://bitcoinwiki.org/wiki/script">Bitcoin Wiki on Script</a> for technical deep dives.</li>
+<li>Read the <a href="https://crypto.news/introduction-bitcoins-scripting-language/">Introduction to Bitcoin’s Scripting Language on Crypto.News</a> for additional context and practical examples.</li>
+<li>Playground <a href="https://wschae.github.io/build/editor.html">https://wschae.github.io/build/editor.html</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="opcodes">OPCODES</h2>
+<h2 id="constants">Constants</h2>
+
+<table>
+<thead>
+<tr>
+<th>OP_CODE</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OP_0</code>, <code>OP_FALSE</code></td>
+<td>An empty array of bytes is pushed onto the stack. (This is not a no-op: an item is added to the stack.)</td>
+</tr>
+<tr>
+<td><code>OP_PUSHDATA1</code></td>
+<td>The next byte contains the number of bytes to be pushed onto the stack.</td>
+</tr>
+<tr>
+<td><code>OP_PUSHDATA2</code></td>
+<td>The next two bytes contain the number of bytes to be pushed onto the stack in little-endian order.</td>
+</tr>
+<tr>
+<td><code>OP_PUSHDATA4</code></td>
+<td>The next four bytes contain the number of bytes to be pushed onto the stack in little-endian order.</td>
+</tr>
+<tr>
+<td><code>OP_1NEGATE</code></td>
+<td>The number -1 is pushed onto the stack.</td>
+</tr>
+<tr>
+<td><code>OP_1</code>, <code>OP_TRUE</code></td>
+<td>The number 1 is pushed onto the stack.</td>
+</tr>
+<tr>
+<td><code>OP_2</code>–<code>OP_16</code></td>
+<td>The number in the word name (2–16) is pushed onto the stack.</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="flow-control">Flow Control</h2>
+
+<table>
+<thead>
+<tr>
+<th>OP_CODE</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OP_NOP</code></td>
+<td>Does nothing.</td>
+</tr>
+<tr>
+<td><code>OP_IF</code></td>
+<td>If the top stack value is not False, the statements are executed. The top stack value is removed.</td>
+</tr>
+<tr>
+<td><code>OP_NOTIF</code></td>
+<td>If the top stack value is False, the statements are executed. The top stack value is removed.</td>
+</tr>
+<tr>
+<td><code>OP_ELSE</code></td>
+<td>If the preceding <code>OP_IF</code>, <code>OP_NOTIF</code>, or <code>OP_ELSE</code> was not executed, then these statements are; if the preceding <code>OP_IF</code>, <code>OP_NOTIF</code>, or <code>OP_ELSE</code> was executed, then these statements are not.</td>
+</tr>
+<tr>
+<td><code>OP_ENDIF</code></td>
+<td>Ends an if/else block. All blocks must end, or the transaction is invalid. An <code>OP_ENDIF</code> without <code>OP_IF</code> earlier is also invalid.</td>
+</tr>
+<tr>
+<td><code>OP_VERIFY</code></td>
+<td>Marks transaction as invalid if top stack value is not true. The top stack value is removed.</td>
+</tr>
+<tr>
+<td><code>OP_RETURN</code></td>
+<td>Marks transaction as invalid. Since Bitcoin 0.9, a standard way of attaching extra data to transactions is to add a zero-value output with a <code>scriptPubKey</code> consisting of <code>OP_RETURN</code> followed by data. Such outputs are provably unspendable and specially discarded from storage in the UTXO set.</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="stack-operations">Stack Operations</h2>
+
+<table>
+<thead>
+<tr>
+<th>OP_CODE</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OP_TOALTSTACK</code></td>
+<td>Puts the input onto the top of the alt stack. Removes it from the main stack.</td>
+</tr>
+<tr>
+<td><code>OP_FROMALTSTACK</code></td>
+<td>Puts the input onto the top of the main stack. Removes it from the alt stack.</td>
+</tr>
+<tr>
+<td><code>OP_IFDUP</code></td>
+<td>If the top stack value is not 0, duplicate it.</td>
+</tr>
+<tr>
+<td><code>OP_DEPTH</code></td>
+<td>Puts the number of stack items onto the stack.</td>
+</tr>
+<tr>
+<td><code>OP_DROP</code></td>
+<td>Removes the top stack item.</td>
+</tr>
+<tr>
+<td><code>OP_DUP</code></td>
+<td>Duplicates the top stack item.</td>
+</tr>
+<tr>
+<td><code>OP_NIP</code></td>
+<td>Removes the second-to-top stack item.</td>
+</tr>
+<tr>
+<td><code>OP_OVER</code></td>
+<td>Copies the second-to-top stack item to the top.</td>
+</tr>
+<tr>
+<td><code>OP_PICK</code></td>
+<td>The item <code>n</code> back in the stack is copied to the top.</td>
+</tr>
+<tr>
+<td><code>OP_ROLL</code></td>
+<td>The item <code>n</code> back in the stack is moved to the top.</td>
+</tr>
+<tr>
+<td><code>OP_ROT</code></td>
+<td>The 3rd item down the stack is moved to the top.</td>
+</tr>
+<tr>
+<td><code>OP_SWAP</code></td>
+<td>The top two items on the stack are swapped.</td>
+</tr>
+<tr>
+<td><code>OP_TUCK</code></td>
+<td>The item at the top of the stack is copied and inserted before the second-to-top item.</td>
+</tr>
+<tr>
+<td><code>OP_2DROP</code></td>
+<td>Removes the top two stack items.</td>
+</tr>
+<tr>
+<td><code>OP_2DUP</code></td>
+<td>Duplicates the top two stack items.</td>
+</tr>
+<tr>
+<td><code>OP_3DUP</code></td>
+<td>Duplicates the top three stack items.</td>
+</tr>
+<tr>
+<td><code>OP_2OVER</code></td>
+<td>Copies the pair of items two spaces back in the stack to the front.</td>
+</tr>
+<tr>
+<td><code>OP_2ROT</code></td>
+<td>The fifth and sixth items back are moved to the top of the stack.</td>
+</tr>
+<tr>
+<td><code>OP_2SWAP</code></td>
+<td>Swaps the top two pairs of items.</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="splicing-operations">Splicing Operations</h2>
+
+<table>
+<thead>
+<tr>
+<th>OP_CODE</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OP_CAT</code></td>
+<td>Concatenates two strings. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_SUBSTR</code></td>
+<td>Returns a section of a string. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_LEFT</code></td>
+<td>Keeps only characters left of the specified point in a string. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_RIGHT</code></td>
+<td>Keeps only characters right of the specified point in a string. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_SIZE</code></td>
+<td>Pushes the string length of the top element of the stack (without popping it).</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="bitwise-operations">Bitwise Operations</h2>
+
+<table>
+<thead>
+<tr>
+<th>OP_CODE</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OP_INVERT</code></td>
+<td>Flips all of the bits in the input. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_AND</code></td>
+<td>Boolean and between each bit in the inputs. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_OR</code></td>
+<td>Boolean or between each bit in the inputs. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_XOR</code></td>
+<td>Boolean exclusive or between each bit in the inputs. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_EQUAL</code></td>
+<td>Returns 1 if the inputs are exactly equal, 0 otherwise.</td>
+</tr>
+<tr>
+<td><code>OP_EQUALVERIFY</code></td>
+<td>Same as <code>OP_EQUAL</code>, but runs <code>OP_VERIFY</code> afterward.</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="arithmetic-operations">Arithmetic Operations</h2>
+
+<table>
+<thead>
+<tr>
+<th>OP_CODE</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OP_1ADD</code></td>
+<td>1 is added to the input.</td>
+</tr>
+<tr>
+<td><code>OP_1SUB</code></td>
+<td>1 is subtracted from the input.</td>
+</tr>
+<tr>
+<td><code>OP_NEGATE</code></td>
+<td>The sign of the input is flipped.</td>
+</tr>
+<tr>
+<td><code>OP_ABS</code></td>
+<td>The input is made positive.</td>
+</tr>
+<tr>
+<td><code>OP_NOT</code></td>
+<td>If the input is 0 or 1, it is flipped. Otherwise, the output will be 0.</td>
+</tr>
+<tr>
+<td><code>OP_0NOTEQUAL</code></td>
+<td>Returns 0 if the input is 0. 1 otherwise.</td>
+</tr>
+<tr>
+<td><code>OP_ADD</code></td>
+<td><code>a</code> is added to <code>b</code>.</td>
+</tr>
+<tr>
+<td><code>OP_SUB</code></td>
+<td><code>b</code> is subtracted from <code>a</code>.</td>
+</tr>
+<tr>
+<td><code>OP_MUL</code></td>
+<td><code>a</code> is multiplied by <code>b</code>. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_DIV</code></td>
+<td><code>a</code> is divided by <code>b</code>. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_MOD</code></td>
+<td>Returns the remainder after dividing <code>a</code> by <code>b</code>. <em>(disabled)</em></td>
+</tr>
+<tr>
+<td><code>OP_BOOLAND</code></td>
+<td>If both <code>a</code> and <code>b</code> are not 0, the output is 1. Otherwise 0.</td>
+</tr>
+<tr>
+<td><code>OP_BOOLOR</code></td>
+<td>If <code>a</code> or <code>b</code> is not 0, the output is 1. Otherwise 0.</td>
+</tr>
+<tr>
+<td><code>OP_NUMEQUAL</code></td>
+<td>Returns 1 if the numbers are equal, 0 otherwise.</td>
+</tr>
+<tr>
+<td><code>OP_NUMEQUALVERIFY</code></td>
+<td>Same as <code>OP_NUMEQUAL</code>, but runs <code>OP_VERIFY</code> afterward.</td>
+</tr>
+<tr>
+<td><code>OP_NUMNOTEQUAL</code></td>
+<td>Returns 1 if the numbers are not equal, 0 otherwise.</td>
+</tr>
+<tr>
+<td><code>OP_LESSTHAN</code></td>
+<td>Returns 1 if <code>a</code> is less than <code>b</code>, 0 otherwise.</td>
+</tr>
+<tr>
+<td><code>OP_GREATERTHAN</code></td>
+<td>Returns 1 if <code>a</code> is greater than <code>b</code>, 0 otherwise.</td>
+</tr>
+<tr>
+<td><code>OP_MIN</code></td>
+<td>Returns the smaller of <code>a</code> and <code>b</code>.</td>
+</tr>
+<tr>
+<td><code>OP_MAX</code></td>
+<td>Returns the larger of <code>a</code> and <code>b</code>.</td>
+</tr>
+<tr>
+<td><code>OP_WITHIN</code></td>
+<td>Returns 1 if <code>x</code> is within the specified range (left-inclusive), 0 otherwise.</td>
+</tr>
+</tbody>
+</table><hr>
+<h2 id="crypto-operations">Crypto Operations</h2>
+
+<table>
+<thead>
+<tr>
+<th>OP_CODE</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OP_SHA256</code></td>
+<td>The input is hashed using SHA-256.</td>
+</tr>
+<tr>
+<td><code>OP_CHECKSIG</code></td>
+<td>Verifies an ECDSA signature.</td>
+</tr>
+<tr>
+<td><code>OP_HASH160</code></td>
+<td>The input is hashed twice: first with SHA-256 and then with RIPEMD-160.</td>
+</tr>
+</tbody>
+</table><hr>
+</div>
+</body>
+
+</html>
