@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome file</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>Bitcoin Scripting allows for extensive control over Bitcoin transactions, but it comes with risks. Since Scripts operate somewhat isolated from the Bitcoin network, it is possible to create a script that is accepted by the network but impossible to redeem. This makes thorough testing crucial before using a script with real funds.</p>
+<hr>
+<h2 id="methods-for-testing-bitcoin-scripts"><strong>Methods for Testing Bitcoin Scripts</strong></h2>
+<h3 id="install-btcdeb"><strong>1. Install btcdeb</strong></h3>
+<p>The Bitcoin Script Debugger (btcdeb) by @kallewoof is one of the most reliable tools for debugging Bitcoin Scripts. It requires installing C++ dependencies and setting up a development environment.</p>
+<h4 id="installation-steps"><strong>Installation Steps</strong></h4>
+<ol>
+<li>
+<p><strong>Clone btcdeb repository</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token function">git</span>
+<span class="token function">git</span> clone https://github.com/bitcoin-core/btcdeb.git
+
+</code></pre>
+</li>
+<li>
+<p><strong>Install required packages</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> autoconf libtool g++ pkg-config <span class="token function">make</span>
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> libreadline-dev
+
+</code></pre>
+</li>
+<li>
+<p><strong>Compile and install btcdeb</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">cd</span> btcdeb
+./autogen.sh
+./configure
+<span class="token function">make</span>
+<span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span>
+
+</code></pre>
+</li>
+<li>
+<p><strong>Verify installation</strong></p>
+<pre class=" language-bash"><code class="prism  language-bash"><span class="token function">which</span> btcdeb
+/usr/local/bin/btcdeb
+
+</code></pre>
+</li>
+</ol>
+<hr>
+<h3 id="using-btcdeb"><strong>2. Using btcdeb</strong></h3>
+<p>btcdeb functions like a debugger, allowing step-by-step execution of a script. It can be started with a script as an argument or as an interactive interpreter.</p>
+<h4 id="example-addition-operation"><strong>Example: Addition Operation</strong></h4>
+<ul>
+<li>
+<p>Running an addition script <code>1 2 OP_ADD</code> in btcdeb:</p>
+<pre class=" language-bash"><code class="prism  language-bash">btcdeb <span class="token string">'[1 2 OP_ADD]'</span>
+
+</code></pre>
+</li>
+<li>
+<p><strong>Step Execution</strong>:</p>
+<pre><code>btcdeb&gt; step   # Push 1 onto stack
+btcdeb&gt; step   # Push 2 onto stack
+btcdeb&gt; step   # Execute OP_ADD (1+2=3)
+
+</code></pre>
+<p>Final stack output:</p>
+<pre><code>| 03  |
+
+</code></pre>
+</li>
+</ul>
+<h4 id="example-subtraction-operation"><strong>Example: Subtraction Operation</strong></h4>
+<ul>
+<li>
+<p>Running <code>3 2 OP_ADD 4 OP_SUB</code> in btcdeb:</p>
+<pre class=" language-bash"><code class="prism  language-bash">btcdeb <span class="token string">'[3 2 OP_ADD 4 OP_SUB]'</span>
+
+</code></pre>
+</li>
+<li>
+<p><strong>Execution Steps</strong>:</p>
+<pre><code>btcdeb&gt; step  # Push 3 onto stack
+btcdeb&gt; step  # Push 2 onto stack
+btcdeb&gt; step  # OP_ADD (3+2=5)
+btcdeb&gt; step  # Push 4 onto stack
+btcdeb&gt; step  # OP_SUB (5-4=1)
+
+</code></pre>
+<p>Final stack output:</p>
+<pre><code>| 01  |
+
+</code></pre>
+</li>
+</ul>
+<hr>
+<h3 id="basic-bitcoin-scripts-examples"><strong>3. Basic Bitcoin Scripts Examples</strong></h3>
+<p>Below are 10 simple Bitcoin Scripts that perform basic operations:</p>
+<ol>
+<li>
+<p><strong>Addition</strong>: <code>2 3 OP_ADD</code> → Result: <code>5</code></p>
+</li>
+<li>
+<p><strong>Subtraction</strong>: <code>6 4 OP_SUB</code> → Result: <code>2</code></p>
+</li>
+<li>
+<p><strong>Multiplication (via looping)</strong>: <code>2 3 OP_DUP OP_ADD OP_ADD</code> → Result: <code>6</code></p>
+</li>
+<li>
+<p><strong>Division (Approximate using shifts)</strong>: <code>8 2 OP_2DIV</code> → Result: <code>4</code></p>
+</li>
+<li>
+<p><strong>Check if Equal</strong>: <code>5 5 OP_EQUAL</code> → Result: <code>True</code></p>
+</li>
+<li>
+<p><strong>Check if Not Equal</strong>: <code>3 5 OP_EQUAL OP_NOT</code> → Result: <code>True</code></p>
+</li>
+<li>
+<p><strong>Boolean AND</strong>: <code>1 1 OP_BOOLAND</code> → Result: <code>True</code></p>
+</li>
+<li>
+<p><strong>Boolean OR</strong>: <code>0 1 OP_BOOLOR</code> → Result: <code>True</code></p>
+</li>
+<li>
+<p><strong>Negate Value</strong>: <code>5 OP_NEGATE</code> → Result: <code>-5</code></p>
+</li>
+<li>
+<p><strong>Absolute Value</strong>: <code>-7 OP_ABS</code> → Result: <code>7</code></p>
+</li>
+</ol>
+<p>These basic scripts help understand how Bitcoin Script works at a fundamental level.</p>
+<hr>
+<h3 id="advanced-bitcoin-scripts-examples"><strong>4. Advanced Bitcoin Scripts Examples</strong></h3>
+<hr>
+<h3 id="pay-to-pubkey-p2pk">1. <strong>Pay-to-PubKey (P2PK)</strong></h3>
+<p><strong>ScriptPubKey (locking script)</strong>:</p>
+<pre><code>&lt;Public Key&gt; OP_CHECKSIG
+
+</code></pre>
+<p><strong>ScriptSig (unlocking script)</strong>:</p>
+<pre><code>&lt;Signature&gt;
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p>The recipient’s public key is embedded in the locking script.</p>
+</li>
+<li>
+<p>To spend the UTXO, the spender must provide a valid signature matching the public key.</p>
+</li>
+<li>
+<p><code>OP_CHECKSIG</code> checks if the provided signature corresponds to the public key.</p>
+</li>
+</ul>
+<hr>
+<h3 id="pay-to-pubkey-hash-p2pkh">2. <strong>Pay-to-PubKey-Hash (P2PKH)</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>OP_DUP OP_HASH160 &lt;Public Key Hash&gt; OP_EQUALVERIFY OP_CHECKSIG
+
+</code></pre>
+<p><strong>ScriptSig</strong>:</p>
+<pre><code>&lt;Signature&gt; &lt;Public Key&gt;
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p><code>OP_DUP</code>: Duplicates the top stack item (public key).</p>
+</li>
+<li>
+<p><code>OP_HASH160</code>: Hashes the public key (SHA-256 + RIPEMD-160).</p>
+</li>
+<li>
+<p><code>OP_EQUALVERIFY</code>: Verifies that the provided public key hash matches the expected one.</p>
+</li>
+<li>
+<p><code>OP_CHECKSIG</code>: Validates the signature against the provided public key.</p>
+</li>
+</ul>
+<hr>
+<h3 id="multisig-2-of-3">3. <strong>Multisig (2-of-3)</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>OP_2 &lt;PubKey1&gt; &lt;PubKey2&gt; &lt;PubKey3&gt; OP_3 OP_CHECKMULTISIG
+
+</code></pre>
+<p><strong>ScriptSig</strong>:</p>
+<pre><code>OP_0 &lt;Signature1&gt; &lt;Signature2&gt;
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p><code>OP_CHECKMULTISIG</code> takes <code>n</code> public keys and requires <code>m</code> valid signatures.</p>
+</li>
+<li>
+<p><code>OP_2</code> and <code>OP_3</code> indicate that 2 signatures out of 3 keys are required.</p>
+</li>
+<li>
+<p>The ScriptSig starts with <code>OP_0</code> (a workaround for a bug in Bitcoin Script).</p>
+</li>
+</ul>
+<hr>
+<h3 id="time-locked-checklocktimeverify---cltv">4. <strong>Time-Locked (CheckLockTimeVerify - CLTV)</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>&lt;Locktime&gt; OP_CHECKLOCKTIMEVERIFY OP_DROP &lt;Public Key&gt; OP_CHECKSIG
+
+</code></pre>
+<p><strong>ScriptSig</strong>:</p>
+<pre><code>&lt;Signature&gt;
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p><code>OP_CHECKLOCKTIMEVERIFY</code> enforces a time lock before spending.</p>
+</li>
+<li>
+<p><code>OP_DROP</code> removes the locktime from the stack.</p>
+</li>
+<li>
+<p>The script functions as a normal P2PK script once the locktime requirement is met.</p>
+</li>
+</ul>
+<hr>
+<h3 id="time-locked-checksequenceverify---csv">5. <strong>Time-Locked (CheckSequenceVerify - CSV)</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>&lt;Relative Locktime&gt; OP_CHECKSEQUENCEVERIFY OP_DROP &lt;Public Key&gt; OP_CHECKSIG
+
+</code></pre>
+<p><strong>ScriptSig</strong>:</p>
+<pre><code>&lt;Signature&gt;
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p><code>OP_CHECKSEQUENCEVERIFY</code> ensures a transaction can only be spent after a certain number of blocks.</p>
+</li>
+<li>
+<p>Useful for implementing features like payment channels.</p>
+</li>
+</ul>
+<hr>
+<h3 id="hashed-timelock-contract-htlc">6. <strong>Hashed Timelock Contract (HTLC)</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>OP_IF
+    &lt;Receiver PubKey&gt; OP_CHECKSIG
+OP_ELSE
+    &lt;Locktime&gt; OP_CHECKLOCKTIMEVERIFY OP_DROP &lt;Sender PubKey&gt; OP_CHECKSIG
+OP_ENDIF
+
+</code></pre>
+<p><strong>ScriptSig (Receiver claims funds with preimage)</strong>:</p>
+<pre><code>&lt;Signature&gt; &lt;Preimage&gt; OP_TRUE
+
+</code></pre>
+<p><strong>ScriptSig (Sender claims funds after locktime expires)</strong>:</p>
+<pre><code>&lt;Signature&gt; OP_FALSE
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p>Funds can be claimed immediately by providing the preimage of a hash.</p>
+</li>
+<li>
+<p>If the preimage is not provided before the locktime, the sender can reclaim the funds.</p>
+</li>
+</ul>
+<hr>
+<h3 id="atomic-swap">7. <strong>Atomic Swap</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>OP_IF
+    OP_SHA256 &lt;Hash&gt; OP_EQUALVERIFY &lt;Receiver PubKey&gt; OP_CHECKSIG
+OP_ELSE
+    &lt;Locktime&gt; OP_CHECKLOCKTIMEVERIFY OP_DROP &lt;Sender PubKey&gt; OP_CHECKSIG
+OP_ENDIF
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p>Enables trustless cross-chain transactions.</p>
+</li>
+<li>
+<p>The receiver claims funds by providing the correct hash preimage.</p>
+</li>
+<li>
+<p>If the receiver does not claim funds within the locktime, the sender can reclaim them.</p>
+</li>
+</ul>
+<hr>
+<h3 id="escrow-multi-party-approval">8. <strong>Escrow (Multi-Party Approval)</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>OP_IF
+    &lt;PubKey_A&gt; OP_CHECKSIG
+OP_ELSE
+    OP_2 &lt;PubKey_A&gt; &lt;PubKey_B&gt; &lt;PubKey_C&gt; OP_3 OP_CHECKMULTISIG
+OP_ENDIF
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p>A single party (<code>PubKey_A</code>) can release the funds.</p>
+</li>
+<li>
+<p>If they are unavailable, 2-of-3 multisig approval is required.</p>
+</li>
+</ul>
+<hr>
+<h3 id="covenant-restricting-spending-conditions">9. <strong>Covenant (Restricting Spending Conditions)</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>OP_DUP OP_HASH160 &lt;Address Hash&gt; OP_EQUALVERIFY OP_CHECKSIG
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p>Covenants restrict how UTXOs can be spent.</p>
+</li>
+<li>
+<p>Can be used to ensure funds go only to specific addresses.</p>
+</li>
+</ul>
+<hr>
+<h3 id="data-storage-op_return">10. <strong>Data Storage (OP_RETURN)</strong></h3>
+<p><strong>ScriptPubKey</strong>:</p>
+<pre><code>OP_RETURN &lt;Data&gt;
+
+</code></pre>
+<p><strong>Explanation</strong>:</p>
+<ul>
+<li>
+<p>Used for embedding arbitrary data into the blockchain.</p>
+</li>
+<li>
+<p>Cannot be spent, making it ideal for metadata storage.</p>
+</li>
+</ul>
+<hr>
+<h3 id="advanced-btcdeb-functions"><strong>5. Advanced btcdeb Functions</strong></h3>
+<ul>
+<li>
+<p><code>print</code>: Shows the full script and execution position.</p>
+</li>
+<li>
+<p><code>stack</code>: Displays the current stack.</p>
+</li>
+</ul>
+<p>Example:</p>
+<pre class=" language-bash"><code class="prism  language-bash">btcdeb<span class="token operator">&gt;</span> print
+  <span class="token comment">#0000 3</span>
+  <span class="token comment">#0001 2</span>
+  -<span class="token operator">&gt;</span> <span class="token comment">#0002 OP_ADD</span>
+  <span class="token comment">#0003 4</span>
+  <span class="token comment">#0004 OP_SUB</span>
+btcdeb<span class="token operator">&gt;</span> stack
+  <span class="token operator">&lt;</span>01<span class="token operator">&gt;</span> 02  <span class="token punctuation">(</span>top<span class="token punctuation">)</span>
+  <span class="token operator">&lt;</span>02<span class="token operator">&gt;</span> 03
+
+</code></pre>
+<p>⚠ <strong>Note</strong>: btcdeb does not fully support OP_CHECKSIG and OP_CHECKMULTISIG verification.</p>
+<hr>
+<h3 id="testing-on-bitcoin-testnet"><strong>6. Testing on Bitcoin Testnet</strong></h3>
+<p>Even with btcdeb and online simulators, the only true test of a Bitcoin Script is on <strong>Bitcoin Testnet</strong>. Always test on Testnet before using on Mainnet.</p>
+<hr>
+<h2 id="summary"><strong>Summary</strong></h2>
+<ul>
+<li>
+<p><strong>Install btcdeb</strong> for reliable script debugging.</p>
+</li>
+<li>
+<p><strong>Use btcdeb</strong> to step through script execution.</p>
+</li>
+<li>
+<p><strong>Try online tools</strong> for visualization but beware of limitations. <a href="https://siminchen.github.io/bitcoinIDE/build/editor.html">https://siminchen.github.io/bitcoinIDE/build/editor.html</a></p>
+</li>
+<li>
+<p><strong>Final verification must be done on Bitcoin Testnet</strong> to ensure compatibility with the real network.</p>
+</li>
+</ul>
+</div>
+</body>
+
+</html>

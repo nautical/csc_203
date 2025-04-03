@@ -1,0 +1,286 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitcoin</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h2 id="detailed-bitcoin-transactions-explained-for-students">Detailed Bitcoin Transactions Explained for Students</h2>
+<h3 id="slide-1-title-slide">Slide 1: Title Slide</h3>
+<ul>
+<li>
+<p><strong>Title:</strong> Bitcoin Transactions</p>
+</li>
+<li>
+<p><strong>Subtitle:</strong> Understanding How Bitcoin Changes Hands</p>
+</li>
+</ul>
+<h3 id="slide-2-what-is-a-bitcoin-transaction-simple-explanation">Slide 2: What is a Bitcoin Transaction? (Simple Explanation)</h3>
+<p>Sending and Receiving Bitcoin</p>
+<pre><code>-   A Bitcoin transaction is like a digital record of sending Bitcoin from one person to another.
+    
+-   It's how Bitcoin "moves" between people's digital wallets.
+    
+-   Think of it like writing down in a public notebook who sent how much Bitcoin to whom.
+    
+-   This "notebook" is called the blockchain.
+</code></pre>
+<ul>
+<li>
+<p><strong>Analogy:</strong></p>
+<ul>
+<li>Imagine you’re giving a friend some digital money. A Bitcoin transaction is like writing down that you gave them the money in a book that everyone can see.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-3-bitcoin-addresses-your-digital-mailbox">Slide 3: Bitcoin Addresses: Your Digital Mailbox</h3>
+<p>Where Bitcoin Lives: Bitcoin Addresses</p>
+<pre><code>-   A Bitcoin address is like a bank account number, but for Bitcoin.
+    
+-   It's a unique string of letters and numbers where you can receive Bitcoin.
+    
+-   People send Bitcoin _to_ your Bitcoin address.
+    
+-   You can have many Bitcoin addresses.
+</code></pre>
+<ul>
+<li>
+<p><strong>Analogy:</strong></p>
+<ul>
+<li>Think of a Bitcoin address as your email address. People send you emails (Bitcoin) to that address.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://static.learnmeabitcoin.com/diagrams/png/transaction.png" alt="Diagram of the structure of a bitcoin transaction showing the inputs and outputs."><br>
+To be more precise, a transaction:</p>
+<ol>
+<li>Selects existing batches of bitcoins (<a href="https://learnmeabitcoin.com/technical/transaction/input/">inputs</a>) and unlocks them.</li>
+<li>Creates new batches of bitcoins (<a href="https://learnmeabitcoin.com/technical/transaction/output/">outputs</a>) and puts new locks on them.</li>
+</ol>
+<p>You can have multiple inputs and outputs in a single transaction.</p>
+<p>So you can think of a transaction as being <strong>part of a chain</strong> of outputs; one transaction creates an output, and then a future transaction selects that output (as an input) and unlocks it to create new outputs.</p>
+<h3 id="slide-4-transaction-inputs-where-the-bitcoin-comes-from-detailed">Slide 4: Transaction Inputs: Where the Bitcoin Comes From (Detailed)</h3>
+<p>Inputs: Tracing the Bitcoin’s History</p>
+<pre><code>-   When you send Bitcoin, you're actually spending Bitcoin you received in previous transactions.
+    
+-   These previous receipts are called "Unspent Transaction Outputs" or UTXOs.
+    
+-   Each input in a new transaction points to a specific UTXO.
+    
+-   It's like saying, "I'm using the Bitcoin I got from this earlier transaction to pay for this."
+</code></pre>
+<ul>
+<li>
+<p><strong>Analogy:</strong></p>
+<ul>
+<li>Imagine you have a bunch of gift cards of different values. When you buy something, you use one or more of those gift cards. The gift cards are like UTXOs.<br>
+<img src="https://static.learnmeabitcoin.com/diagrams/png/transaction-chain.png" alt="Diagram showing a chain of transactions where the new transactions spend the outputs of previous transactions."></li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-5-transaction-outputs-where-the-bitcoin-goes-detailed">Slide 5: Transaction Outputs: Where the Bitcoin Goes (Detailed)</h3>
+<p>Outputs: Sending Bitcoin to New Addresses</p>
+<pre><code>-   Outputs specify where the Bitcoin is going in the current transaction.
+    
+-   Each output includes a Bitcoin address and the amount of Bitcoin being sent to that address.
+    
+-   A transaction can have multiple outputs (sending Bitcoin to multiple people at once).
+    
+-   Outputs create new UTXOs that can be spent in future transactions.
+</code></pre>
+<ul>
+<li>
+<p><strong>Analogy:</strong></p>
+<ul>
+<li>When you use those gift cards, you might not use the exact amount. You get change back. The change is like a new UTXO.<br>
+<img src="https://static.learnmeabitcoin.com/diagrams/png/transaction-fee.png" alt="Diagram showing how a transaction fee is the remainder of the value of a transaction's inputs minus the value of it's outputs."></li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-6-transaction-fees-paying-for-the-service">Slide 6: Transaction Fees: Paying for the Service</h3>
+<ul>
+<li>
+<p>Transaction Fees: Rewarding the Network</p>
+<ul>
+<li>
+<p>When you send Bitcoin, you include a small fee.</p>
+</li>
+<li>
+<p>This fee is paid to the people who process transactions (miners).</p>
+</li>
+<li>
+<p>Fees incentivize miners to include your transaction in a block.</p>
+</li>
+<li>
+<p>Transactions with higher fees are usually processed faster.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Analogy:</strong></p>
+<ul>
+<li>Think of it like tipping a waiter. A bigger tip might get you better service.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-7-the-technical-structure-of-a-transaction-simplified">Slide 7: The Technical Structure of a Transaction (Simplified)</h3>
+<ul>
+<li>
+<p>How a Transaction is Built (Simplified)</p>
+<ul>
+<li>
+<p>A Bitcoin transaction is made up of different pieces of information.</p>
+</li>
+<li>
+<p>These pieces include:</p>
+<ul>
+<li>
+<p><strong>Version:</strong> Tells the Bitcoin network which rules to follow.</p>
+</li>
+<li>
+<p><strong>Inputs:</strong> Where the Bitcoin is coming from (UTXOs).</p>
+</li>
+<li>
+<p><strong>Outputs:</strong> Where the Bitcoin is going.</p>
+</li>
+<li>
+<p><strong>Locktime:</strong> A special setting (usually not used) that can delay when a transaction can be processed.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://static.learnmeabitcoin.com/diagrams/png/transaction-data-visual-segwit.png" alt="Diagram showing the location of the witness field in a segwit transaction and how it's used to unlock inputs."></p>
+<h3 id="slide-8-unspent-transaction-outputs-utxos-explained-again">Slide 8: Unspent Transaction Outputs (UTXOs) Explained Again</h3>
+<ul>
+<li>
+<p>UTXOs: The Building Blocks of Bitcoin</p>
+<ul>
+<li>
+<p>Let’s talk about UTXOs again because they’re important!</p>
+</li>
+<li>
+<p>UTXOs are like individual “coins” that you own.</p>
+</li>
+<li>
+<p>Your Bitcoin balance is the sum of all your UTXOs.</p>
+</li>
+<li>
+<p>When you spend Bitcoin, you’re combining and spending your UTXOs to create new UTXOs for the recipient and yourself (change).</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Analogy:</strong></p>
+<ul>
+<li>Imagine you have a wallet with different denominations of cash ($1, $5, $10 bills). UTXOs are like those individual bills. Your total cash is your balance.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-9-how-transactions-get-on-the-blockchain-simplified">Slide 9: How Transactions Get on the Blockchain (Simplified)</h3>
+<ul>
+<li>
+<p>From Your Wallet to the Blockchain</p>
+<ul>
+<li>
+<p>You use your Bitcoin wallet to create and sign a transaction.</p>
+</li>
+<li>
+<p>Your wallet sends this transaction to the Bitcoin network.</p>
+</li>
+<li>
+<p>Nodes (computers on the network) check if the transaction is valid.</p>
+</li>
+<li>
+<p>Valid transactions are added to a waiting list called the “mempool.”</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-10-mining-and-confirmations-making-it-official">Slide 10: Mining and Confirmations: Making it Official</h3>
+<ul>
+<li>
+<p>Mining: Adding Transactions to the Blockchain</p>
+<ul>
+<li>
+<p>Miners are like the record-keepers of the Bitcoin network.</p>
+</li>
+<li>
+<p>They take transactions from the mempool and group them into “blocks.”</p>
+</li>
+<li>
+<p>Miners solve a complex puzzle to add a block to the blockchain.</p>
+</li>
+<li>
+<p>This process is called “mining.”</p>
+</li>
+<li>
+<p>When a block is added, the transactions in it are considered “confirmed.”</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Analogy:</strong></p>
+<ul>
+<li>Imagine the miners are like librarians who collect all the notes (transactions) and bind them into a book (block).</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-11-confirmations-and-security-why-its-hard-to-cheat">Slide 11: Confirmations and Security: Why It’s Hard to Cheat</h3>
+<ul>
+<li>
+<p>Confirmations: Making Transactions Secure</p>
+<ul>
+<li>
+<p>Each new block added to the blockchain is like a “stamp of approval” for the transactions in it.</p>
+</li>
+<li>
+<p>More confirmations mean it’s harder to change or reverse a transaction.</p>
+</li>
+<li>
+<p>Six confirmations are generally considered very secure.</p>
+</li>
+<li>
+<p>The blockchain is designed to be very difficult to tamper with.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Analogy:</strong></p>
+<ul>
+<li>Imagine each book (block) is added to a library shelf (blockchain). The more books are on top of a specific book, the harder it is to take that book out and change it.</li>
+</ul>
+</li>
+</ul>
+<h3 id="slide-12-summary-what-youve-learned">Slide 12: Summary: What You’ve Learned</h3>
+<ul>
+<li>
+<p>Key Takeaways</p>
+<ul>
+<li>
+<p>Bitcoin transactions are how Bitcoin is sent and received.</p>
+</li>
+<li>
+<p>They involve inputs (UTXOs) and outputs.</p>
+</li>
+<li>
+<p>Fees are paid to miners.</p>
+</li>
+<li>
+<p>Transactions are recorded on the blockchain.</p>
+</li>
+<li>
+<p>UTXOs are the fundamental units of Bitcoin.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</body>
+
+</html>
